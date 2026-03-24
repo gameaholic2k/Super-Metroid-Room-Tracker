@@ -1,0 +1,111 @@
+import os
+import json
+import csv
+import glob
+import copy
+from pathlib import Path
+import configparser
+from dataclasses import dataclass
+
+# config = configparser.ConfigParser()
+# config.read('config.ini')
+# roomtime_config = config['roomtime_config']
+# channel = roomtime_config['twitch_channel_name']
+# token = roomtime_config['token']
+# # room_log_file = roomtime_config['room_log_file']
+# category_directory = roomtime_config['category_folder']
+# room_log_directory = roomtime_config['room_log_file_folder']
+# address_file = roomtime_config['address_file']
+# pre_defined_room_states_file = roomtime_config['pre_defined_room_states_file']
+
+
+
+class FileManager():
+    def __init__(self):
+        self.config = configparser.ConfigParser()
+        self._config_file = 'config.ini'
+        self.config.read(self.config_file)
+        self.roomtime_config = self.config['roomtime_config']
+        self._room_log_file = self.roomtime_config['room_log_file']
+        self._run_category_directory = self.roomtime_config['category_folder']
+        self._address_file = self.roomtime_config['address_file']
+        self._room_log_directory = self.roomtime_config['room_log_file_folder']
+        self._pre_defined_room_states_file = self.roomtime_config['pre_defined_room_states_file']
+        self.channel_name = self.roomtime_config['channel_name']
+        self.api_token = self.roomtime_config['api_token']
+
+    @property
+    def config_file(self):
+        return self._config_file
+
+    @property
+    def room_log_file(self):
+        return self._room_log_file
+    
+    @property
+    def run_category_directory(self):
+        return self._run_category_directory
+    
+    @property
+    def address_file(self):
+        return self._address_file
+    
+    @property
+    def room_log_directory(self):
+        return self._room_log_directory
+    
+    @property
+    def pre_defined_room_states_file(self):
+        return self._pre_defined_room_states_file
+
+    def get_run_category_files(self):
+        '''
+
+        :return:
+        '''
+        json_files = glob.glob(f'{self.run_category_directory}/*.json')
+        return json_files
+    
+    def get_run_categories(self):
+        run_categories = []
+        run_category_files = self.get_run_category_files()
+        for file in run_category_files:
+            try:
+                with open(file, 'r') as f:
+                    category_definition = json.load(f)
+                    run_categories.append(category_definition['category'])
+            except Exception as e:
+                print(f'Exception encountered from reading file: {file}')
+                raise e
+        return run_categories
+    
+    def get_room_logs(self):
+        '''
+
+        :return:
+        '''
+        data = []
+        if not Path(self.room_log_file).exists():
+            with open(self.room_log_file, 'w') as f:
+                pass
+        with open(self.room_log_file, 'r') as f:
+            for line in f:
+                data.append(json.loads(line))
+        return data
+    
+    def get_address_definitions(self):
+        '''
+
+        :return:
+        '''
+        with open(self._address_file, 'r') as f:
+            address_definitions = json.load(f)['definitions']
+        return address_definitions
+
+
+
+
+
+# kpdr = RunCategory('KPDR')
+# kpdr_room_paths = kpdr.get_run_category_room_paths()
+# print(json.dumps(kpdr_room_paths, indent=4))

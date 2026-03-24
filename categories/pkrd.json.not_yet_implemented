@@ -1,0 +1,349 @@
+{
+    "category": "PKRD",
+    "roomDataList": [
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 1",
+                "room": "Ceres Elevator Room",
+                "nextRoom": "Falling Tile Room"
+            },
+            "data": {
+                "roomID": 57157,
+                "nextRoomID": 57229
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 2",
+                "room": "Falling Tile Room",
+                "nextRoom": "Magnet Stairs Room"
+            },
+            "data": {
+                "roomID": 57229,
+                "nextRoomID": 57303
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 3",
+                "room": "Magnet Stairs Room",
+                "nextRoom": "Dead Scientist Room"
+            },
+            "data": {
+                "roomID": 57303,
+                "nextRoomID": 57377
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 4",
+                "room": "Dead Scientist Room",
+                "nextRoom": "58 Escape"
+            },
+            "data": {
+                "roomID": 57377,
+                "nextRoomID": 57451
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 5",
+                "room": "58 Escape",
+                "nextRoom": "Ceres Ridley's Room"
+            },
+            "data": {
+                "roomID": 57451,
+                "nextRoomID": 57525
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres Ridley",
+                "room": "Ceres Ridley's Room",
+                "nextRoom": "58 Escape"
+            },
+            "data": {
+                "roomID": 57525,
+                "nextRoomID": 57451
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 5",
+                "room": "58 Escape",
+                "nextRoom": "Dead Scientist Room"
+            },
+            "data": {
+                "roomID": 57451,
+                "nextRoomID": 57377
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 4",
+                "room": "Dead Scientist Room",
+                "nextRoom": "Magnet Stairs Room"
+            },
+            "data": {
+                "roomID": 57377,
+                "nextRoomID": 57303
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 3",
+                "room": "Magnet Stairs Room",
+                "nextRoom": "Falling Tile Room"
+            },
+            "data": {
+                "roomID": 57303,
+                "nextRoomID": 57229
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 2",
+                "room": "Falling Tile Room",
+                "nextRoom": "Ceres Elevator Room"
+            },
+            "data": {
+                "roomID": 57229,
+                "nextRoomID": 57157
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ceres 1",
+                "room": "Ceres Elevator Room",
+                "nextRoom": "Ceres Elevator Room"
+            },
+            "data": {
+                "roomID": 57157,
+                "nextRoomID": 57157
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Landing Site",
+                "room": "Landing Site",
+                "nextRoom": "Parlor and Alcatraz"
+            },
+            "data": {
+                "roomID": 37368,
+                "nextRoomID": 37629
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Parlor and Alcatraz (Moonfall)",
+                "room": "Parlor and Alcatraz",
+                "nextRoom": "Climb"
+            },
+            "data": {
+                "roomID": 37629,
+                "nextRoomID": 38586
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Climb",
+                "room": "Climb",
+                "nextRoom": "Pit Room"
+            },
+            "data": {
+                "roomID": 38586,
+                "nextRoomID": 38748
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Pit Room",
+                "room": "Pit Room",
+                "nextRoom": "Blue Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 38748,
+                "nextRoomID": 38837
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Blue Brin Elevator",
+                "room": "Blue Brinstar Elevator Room",
+                "nextRoom": "Morph Ball Room"
+            },
+            "data": {
+                "roomID": 38837,
+                "nextRoomID": 40607
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Morph Ball Room",
+                "room": "Morph Ball Room",
+                "nextRoom": "Construction Zone"
+            },
+            "data": {
+                "roomID": 40607,
+                "nextRoomID": 40721
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Construction Zone",
+                "room": "Construction Zone",
+                "nextRoom": "First Missile Room"
+            },
+            "data": {
+                "roomID": 40721,
+                "nextRoomID": 41223
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "First Missile Room",
+                "room": "First Missile Room",
+                "nextRoom": "Construction Zone"
+            },
+            "data": {
+                "roomID": 41223,
+                "nextRoomID": 40721
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Construction Zone",
+                "room": "Construction Zone",
+                "nextRoom": "Morph Ball Room"
+            },
+            "data": {
+                "roomID": 40721,
+                "nextRoomID": 40607
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Morph Ball Room",
+                "room": "Morph Ball Room",
+                "nextRoom": "Blue Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 40607,
+                "nextRoomID": 38837
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Blue Brin Elevator",
+                "room": "Blue Brinstar Elevator Room",
+                "nextRoom": "Pit Room"
+            },
+            "data": {
+                "roomID": 38837,
+                "nextRoomID": 38748
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Pit Room Revisited",
+                "room": "Pit Room",
+                "nextRoom": "Climb"
+            },
+            "data": {
+                "roomID": 38748,
+                "nextRoomID": 38586
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Climb (Up)",
+                "room": "Climb",
+                "nextRoom": "Parlor and Alcatraz"
+            },
+            "data": {
+                "roomID": 38586,
+                "nextRoomID": 37629
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Parlor and Alcatraz Revisited",
+                "room": "Parlor and Alcatraz",
+                "nextRoom": "Flyway"
+            },
+            "data": {
+                "roomID": 37629,
+                "nextRoomID": 39033
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Flyway",
+                "room": "Flyway",
+                "nextRoom": "Bomb Torizo Room"
+            },
+            "data": {
+                "roomID": 39033,
+                "nextRoomID": 38916
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bomb Torizo",
+                "room": "Bomb Torizo Room",
+                "nextRoom": "Flyway"
+            },
+            "data": {
+                "roomID": 38916,
+                "nextRoomID": 39033
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Flyway",
+                "room": "Flyway",
+                "nextRoom": "Parlor and Alcatraz"
+            },
+            "data": {
+                "roomID": 39033,
+                "nextRoomID": 37629
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Alcatraz",
+                "room": "Parlor and Alcatraz",
+                "nextRoom": "Terminator Room"
+            },
+            "data": {
+                "roomID": 37629,
+                "nextRoomID": 39181
+            }
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Terminator",
+                "room": "Terminator Room",
+                "nextRoom": "Green Pirates Shaft"
+            },
+            "data": {
+                "roomID": 39181,
+                "nextRoomID": 39357
+            }
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Green Pirate Shaft",
+                "room": "Green Pirates Shaft",
+                "nextRoom": "Lower Mushrooms"
+            },
+            "data": {
+                "roomID": 39357,
+                "nextRoomID": 39273,
+				"exitState": {
+					"hp": 199
+				}
+            }
+        }
+    ]
+}
