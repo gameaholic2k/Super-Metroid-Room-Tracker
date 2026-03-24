@@ -87,6 +87,7 @@ class RoomTimeTrackerGUI:
             "column_select",  # Allow selecting full columns
             "select_rows",    # Enable row selection
             "drag_select",    # Enable drag selection
+            "copy",           # Enable copy spreadsheet
         ))
 
         # Listbox for roomtimes
@@ -287,7 +288,7 @@ class RoomTimeTrackerGUI:
         # Update category index list and file
         print(f'Writing to {self.selected_category.get_run_category_index_filename()}')
         #If log entry for that room is empty, initialize a list with that value
-        if self.selected_category.run_category_indexes[room_logic_index] == [[]]:
+        if is_deeply_empty(self.selected_category.run_category_indexes[room_logic_index]):
             self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
             print('debug')
             print([str(last_log_index)])
@@ -364,4 +365,22 @@ class RoomTimeTrackerGUI:
             self.connect_button.config(state=tkinter.NORMAL)
 
 
+def is_deeply_empty(nested_list):
+    '''
+     Checks if a nested list is completely empty
+    :param nested_list:
+    :return:
+    '''
+    # Iterate through each element in the list
+    for item in nested_list:
+        # If the item is a list, recurse into it. If the recursive call
+        # finds a non-empty item, this list is not deeply empty.
+        if isinstance(item, list):
+            if not is_deeply_empty(item):
+                return False
+        # If the item is not a list, it is actual data, so the list is not deeply empty.
+        elif item:
+            return False
 
+    # If the loop completes without finding any non-empty items or sublists, the list is deeply empty.
+    return True
