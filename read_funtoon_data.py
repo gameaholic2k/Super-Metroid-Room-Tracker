@@ -48,13 +48,13 @@ class RunCategory():
 
         :return:
         '''
-        file = self.get_run_category_filename()
-        with open(file, 'r') as f:
+        with open(self.get_run_category_filename(), 'r') as f:
             run_category_room_paths = json.load(f)['roomDefinitionList']
 
         with open(self.config.pre_defined_room_states_file, 'r') as f:
             pre_defined_room_states = json.load(f)
 
+        # updated_run_category_room_path = []
         for room_path in run_category_room_paths:
             if not 'not_yet_implemented' in room_path:
                 entry_loadout_key = room_path['entry_loadout']
@@ -66,26 +66,28 @@ class RunCategory():
                 entry_collected_items = pre_defined_entry['collectedItems']
                 exit_collected_items = pre_defined_exit['collectedItems']
 
-                # Moving collected items to it's own definition as we need to process that info seperately
-                entry_predefined_itemless = {key: copy.deepcopy(value) for key, value in pre_defined_entry.items() if key != 'collectedItems'}
-                exit_predefined_itemless = {key: copy.deepcopy(value) for key, value in pre_defined_exit.items() if key != 'collectedItems'}
+                # Moving collected items to its own definition as we need to process that info separately
+                entry_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_entry.items() if key != 'collectedItems'}
+                exit_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_exit.items() if key != 'collectedItems'}
 
                 if 'entryState' in room_path['data']:
-                    merged_entry_state = pre_defined_entry | room_path['data']['entryState']
+                    merged_entry_state = entry_predefined | room_path['data']['entryState']
                 else:
-                    merged_entry_state = entry_predefined_itemless
+                    merged_entry_state = entry_predefined
 
                 if 'exitState' in room_path['data']:
-                    merged_entry_state = pre_defined_entry | room_path['data']['exitState']
+                    merged_exit_state = exit_predefined | room_path['data']['exitState']
                 else:
-                    merged_exit_state = exit_predefined_itemless
+                    merged_exit_state = exit_predefined
 
                 room_path['data']['entryState'] = merged_entry_state
                 room_path['data']['exitState'] = merged_exit_state
                 room_path['entryCollectedItems'] = entry_collected_items
                 room_path['exitCollectedItems'] = exit_collected_items
 
+                # updated_run_category_room_path.append(room_path)
         return run_category_room_paths
+        # return updated_run_category_room_path
 
     def get_room_time_names(self) -> list:
         '''
