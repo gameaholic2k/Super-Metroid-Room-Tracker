@@ -81,6 +81,7 @@ class RoomTimeTrackerGUI:
 
         self.sheet.headers(["Room name", "Fastest Time", "Average Time"]) 
         self.sheet.set_sheet_data(self.table_sheet)
+        self.sheet.set_all_cell_sizes_to_text()
         self.sheet.enable_bindings((
             "single_select",  # Allow selecting single cells
             "row_select",     # Allow selecting full rows
@@ -287,11 +288,13 @@ class RoomTimeTrackerGUI:
 
         # Update category index list and file
         print(f'Writing to {self.selected_category.get_run_category_index_filename()}')
+        print(f'Length of index {len(self.selected_category.run_category_indexes[room_logic_index])}')
+        print(type(self.selected_category.run_category_indexes[room_logic_index][0]))
+        print(self.selected_category.run_category_indexes[room_logic_index][0])
         #If log entry for that room is empty, initialize a list with that value
-        if is_deeply_empty(self.selected_category.run_category_indexes[room_logic_index]):
+        # if is_deeply_empty(self.selected_category.run_category_indexes[room_logic_index]):
+        if '[]' in self.selected_category.run_category_indexes[room_logic_index]:
             self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
-            print('debug')
-            print([str(last_log_index)])
         else:
             self.selected_category.run_category_indexes[room_logic_index].append(str(last_log_index))
         with open(self.selected_category.get_run_category_index_filename(), 'w', newline='') as csvfile_handler:
@@ -303,6 +306,7 @@ class RoomTimeTrackerGUI:
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
         self.table_sheet = self._get_table_sheet(self.room_time_names, self.fastest_room_times, self.average_room_times)
         self.sheet.set_sheet_data(self.table_sheet)
+        self.sheet.set_all_cell_sizes_to_text()
         # Change room selection and label
         self.room_dropdown_menu.current(room_logic_index)
         self.dropdown_menu_select(None)
@@ -358,29 +362,7 @@ class RoomTimeTrackerGUI:
             self.status_label.config(text=f"Error: {e}")
             print(f"Error: {e}")
             traceback.print_exc()
-            # self.message_queue.put(f"Error: {e}")
         finally:
             # self.message_queue.put("Disconnected")
             self.status_label.config(text=f"Disconnected", style='Red.TLabel')
             self.connect_button.config(state=tkinter.NORMAL)
-
-
-def is_deeply_empty(nested_list):
-    '''
-     Checks if a nested list is completely empty
-    :param nested_list:
-    :return:
-    '''
-    # Iterate through each element in the list
-    for item in nested_list:
-        # If the item is a list, recurse into it. If the recursive call
-        # finds a non-empty item, this list is not deeply empty.
-        if isinstance(item, list):
-            if not is_deeply_empty(item):
-                return False
-        # If the item is not a list, it is actual data, so the list is not deeply empty.
-        elif item:
-            return False
-
-    # If the loop completes without finding any non-empty items or sublists, the list is deeply empty.
-    return True
