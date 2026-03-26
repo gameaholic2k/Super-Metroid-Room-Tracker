@@ -1,6 +1,6 @@
 {
     "category": "PKRD",
-    "roomDataList": [
+    "roomDefinitionList": [
         {
             "names": {
                 "individual_room_time_name": "Ceres 1",
@@ -10,7 +10,9 @@
             "data": {
                 "roomID": 57157,
                 "nextRoomID": 57229
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -21,7 +23,9 @@
             "data": {
                 "roomID": 57229,
                 "nextRoomID": 57303
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -32,7 +36,9 @@
             "data": {
                 "roomID": 57303,
                 "nextRoomID": 57377
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -43,7 +49,9 @@
             "data": {
                 "roomID": 57377,
                 "nextRoomID": 57451
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -54,7 +62,9 @@
             "data": {
                 "roomID": 57451,
                 "nextRoomID": 57525
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -65,7 +75,9 @@
             "data": {
                 "roomID": 57525,
                 "nextRoomID": 57451
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -76,7 +88,9 @@
             "data": {
                 "roomID": 57451,
                 "nextRoomID": 57377
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -87,7 +101,9 @@
             "data": {
                 "roomID": 57377,
                 "nextRoomID": 57303
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -98,7 +114,9 @@
             "data": {
                 "roomID": 57303,
                 "nextRoomID": 57229
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -109,7 +127,9 @@
             "data": {
                 "roomID": 57229,
                 "nextRoomID": 57157
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -120,7 +140,9 @@
             "data": {
                 "roomID": 57157,
                 "nextRoomID": 57157
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -131,19 +153,33 @@
             "data": {
                 "roomID": 37368,
                 "nextRoomID": 37629
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
-                "individual_room_time_name": "Parlor and Alcatraz (Moonfall)",
+                "individual_room_time_name": "Parlor (Moonfall)",
                 "room": "Parlor and Alcatraz",
                 "nextRoom": "Climb"
             },
             "data": {
                 "roomID": 37629,
                 "nextRoomID": 38586
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
+		{
+			"not_yet_implemented": true,
+			"names": {
+                "individual_room_time_name": "Parlor (No Moonfall)",
+				"room": "Parlor and Alcatraz",
+                "nextRoom": "Climb"
+			},
+			"data": null
+		},
+		
         {
             "names": {
                 "individual_room_time_name": "Climb",
@@ -153,7 +189,9 @@
             "data": {
                 "roomID": 38586,
                 "nextRoomID": 38748
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -164,18 +202,9 @@
             "data": {
                 "roomID": 38748,
                 "nextRoomID": 38837
-            }
-        },
-        {
-            "names": {
-                "individual_room_time_name": "Blue Brin Elevator",
-                "room": "Blue Brinstar Elevator Room",
-                "nextRoom": "Morph Ball Room"
             },
-            "data": {
-                "roomID": 38837,
-                "nextRoomID": 40607
-            }
+			"entry_loadout": "no_items",
+			"exit_loadout": "no_items"
         },
         {
             "names": {
@@ -186,7 +215,9 @@
             "data": {
                 "roomID": 40607,
                 "nextRoomID": 40721
-            }
+            },
+			"entry_loadout": "no_items",
+			"exit_loadout": "morph_ball"
         },
         {
             "names": {
@@ -197,7 +228,9 @@
             "data": {
                 "roomID": 40721,
                 "nextRoomID": 41223
-            }
+            },
+			"entry_loadout": "morph_ball",
+			"exit_loadout": "morph_ball"
         },
         {
             "names": {
@@ -208,7 +241,9 @@
             "data": {
                 "roomID": 41223,
                 "nextRoomID": 40721
-            }
+            },
+			"entry_loadout": "morph_ball",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -219,7 +254,9 @@
             "data": {
                 "roomID": 40721,
                 "nextRoomID": 40607
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -230,18 +267,9 @@
             "data": {
                 "roomID": 40607,
                 "nextRoomID": 38837
-            }
-        },
-        {
-            "names": {
-                "individual_room_time_name": "Blue Brin Elevator",
-                "room": "Blue Brinstar Elevator Room",
-                "nextRoom": "Pit Room"
             },
-            "data": {
-                "roomID": 38837,
-                "nextRoomID": 38748
-            }
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -252,7 +280,9 @@
             "data": {
                 "roomID": 38748,
                 "nextRoomID": 38586
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -263,18 +293,22 @@
             "data": {
                 "roomID": 38586,
                 "nextRoomID": 37629
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
-                "individual_room_time_name": "Parlor and Alcatraz Revisited",
+                "individual_room_time_name": "Parlor Revisited",
                 "room": "Parlor and Alcatraz",
                 "nextRoom": "Flyway"
             },
             "data": {
                 "roomID": 37629,
                 "nextRoomID": 39033
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -285,7 +319,9 @@
             "data": {
                 "roomID": 39033,
                 "nextRoomID": 38916
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "awakening_missiles"
         },
         {
             "names": {
@@ -296,7 +332,9 @@
             "data": {
                 "roomID": 38916,
                 "nextRoomID": 39033
-            }
+            },
+			"entry_loadout": "awakening_missiles",
+			"exit_loadout": "bombs"
         },
         {
             "names": {
@@ -307,7 +345,9 @@
             "data": {
                 "roomID": 39033,
                 "nextRoomID": 37629
-            }
+            },
+			"entry_loadout": "bombs",
+			"exit_loadout": "bombs"
         },
         {
             "names": {
@@ -318,7 +358,9 @@
             "data": {
                 "roomID": 37629,
                 "nextRoomID": 39181
-            }
+            },
+			"entry_loadout": "bombs",
+			"exit_loadout": "bombs"
         },
         {
             "names": {
@@ -329,9 +371,11 @@
             "data": {
                 "roomID": 39181,
                 "nextRoomID": 39357
-            }
+            },
+			"entry_loadout": "bombs",
+			"exit_loadout": "terminator_etank"
         },
-		{
+        {
             "names": {
                 "individual_room_time_name": "Green Pirate Shaft",
                 "room": "Green Pirates Shaft",
@@ -340,10 +384,2293 @@
             "data": {
                 "roomID": 39357,
                 "nextRoomID": 39273,
-				"exitState": {
-					"hp": 199
+				"enemiesKilled": 5
+			},
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "terminator_etank"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Mushroom Kingdom",
+                "room": "Lower Mushrooms",
+                "nextRoom": "Green Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 39273,
+                "nextRoomID": 39224
+            },
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "terminator_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Elevator Room",
+                "room": "Green Brinstar Elevator Room",
+                "nextRoom": "Green Brinstar Main Shaft"
+            },
+            "data": {
+                "roomID": 39224,
+                "nextRoomID": 39641
+            },
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "terminator_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Green Brinstar Main Shaft",
+                "room": "Green Brinstar Main Shaft",
+                "nextRoom": "Early Supers Room"
+            },
+            "data": {
+                "roomID": 39641,
+                "nextRoomID": 39880,
+				"enemiesKilled": 2
+            },
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "terminator_etank"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Green Brinstar Main Shaft",
+                "room": "Green Brinstar Main Shaft",
+                "nextRoom": "Early Supers Room"
+            },
+            "data": {
+                "roomID": 39641,
+                "nextRoomID": 39880
+            },
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "terminator_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Early Supers Room",
+                "room": "Early Supers Room",
+                "nextRoom": "Green Brinstar Main Shaft"
+            },
+            "data": {
+                "roomID": 39880,
+                "nextRoomID": 39641
+            },
+			"entry_loadout": "terminator_etank",
+			"exit_loadout": "early_supers"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Green Brinstar Main Shaft",
+                "room": "Green Brinstar Main Shaft",
+                "nextRoom": "Dachora Room"
+            },
+            "data": {
+                "roomID": 39641,
+                "nextRoomID": 40115
+            },
+			"entry_loadout": "early_supers",
+			"exit_loadout": "early_supers"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Dachora Pit (No Drop)",
+                "room": "Dachora Room",
+                "nextRoom": "Big Pink"
+            },
+			"data": {
+                "roomID": 40115,
+                "nextRoomID": 40217,
+				"enemiesKilled": 0
+            },
+			"entry_loadout": "early_supers",
+			"exit_loadout": "early_supers"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Dachora Pit (With Drop)",
+                "room": "Dachora Room",
+                "nextRoom": "Big Pink"
+            },
+            "data": {
+                "roomID": 40115,
+                "nextRoomID": 40217
+            },
+			"entry_loadout": "early_supers",
+			"exit_loadout": "early_supers"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Big Pink",
+                "room": "Big Pink",
+                "nextRoom": "Green Hill Zone"
+            },
+            "data": {
+                "roomID": 40217,
+                "nextRoomID": 40530
+            },
+			"entry_loadout": "early_supers",
+			"exit_loadout": "charge_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Green Hill Zone",
+                "room": "Green Hill Zone",
+                "nextRoom": "Noob Bridge"
+            },
+            "data": {
+                "roomID": 40530,
+                "nextRoomID": 40890
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "charge_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Noob Bridge",
+                "room": "Noob Bridge",
+                "nextRoom": "Red Tower"
+            },
+            "data": {
+                "roomID": 40890,
+                "nextRoomID": 41555
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "charge_beam"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Red Tower",
+                "room": "Red Tower",
+                "nextRoom": "Hellway"
+            },
+            "data": {
+                "roomID": 41555,
+                "nextRoomID": 41719
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "charge_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Hellway",
+                "room": "Hellway",
+                "nextRoom": "Caterpillar Room"
+            },
+            "data": {
+                "roomID": 41719,
+                "nextRoomID": 41762
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "charge_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Caterpillar Room",
+                "room": "Caterpillar Room",
+                "nextRoom": "Alpha Power Bomb Room"
+            },
+            "data": {
+                "roomID": 41762,
+                "nextRoomID": 41902
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "charge_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Alpha Power Bombs",
+                "room": "Alpha Power Bomb Room",
+                "nextRoom": "Caterpillar Room"
+            },
+            "data": {
+                "roomID": 41902,
+                "nextRoomID": 41762
+            },
+			"entry_loadout": "charge_beam",
+			"exit_loadout": "prkd_alpha_power_bombs"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Caterpillar Room",
+                "room": "Caterpillar Room",
+                "nextRoom": "Red Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 41762,
+                "nextRoomID": 38442
+			},
+			"entry_loadout": "prkd_alpha_power_bombs",
+			"exit_loadout": "prkd_alpha_power_bombs"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Crateria Kihunter Room",
+                "room": "Crateria Kihunter Room",
+                "nextRoom": "The Moat"
+            },
+            "data": {
+                "roomID": 38028,
+                "nextRoomID": 38399
+            },
+			"entry_loadout": "prkd_alpha_power_bombs",
+			"exit_loadout": "prkd_alpha_power_bombs",
+			"lessThanEnemiesKilled" : 1
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Moat (CWJ)",
+                "room": "The Moat",
+                "nextRoom": "West Ocean"
+            },
+            "data": {
+                "roomID": 38399,
+                "nextRoomID": 37886
+            },
+			"entry_loadout": "prkd_alpha_power_bombs",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+		{
+			"not_yet_implemented": true,
+            "names": {
+                "individual_room_time_name": "Moat (HBJ)",
+                "room": "The Moat",
+                "nextRoom": "West Ocean"
+            },
+            "data": {
+                "roomID": 38399,
+                "nextRoomID": 37886
+            },
+			"entry_loadout": "prkd_alpha_power_bombs",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "West Ocean",
+                "room": "West Ocean",
+                "nextRoom": "Wrecked Ship Entrance"
+            },
+            "data": {
+                "roomID": 37886,
+                "nextRoomID": 51720
+            },
+			"entry_loadout": "prkd_moat_missiles",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Entrance",
+                "room": "Wrecked Ship Entrance",
+                "nextRoom": "Wrecked Ship Main Shaft"
+            },
+            "data": {
+                "roomID": 51720,
+                "nextRoomID": 51958
+            },
+			"entry_loadout": "prkd_moat_missiles",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Main Shaft",
+                "room": "Wrecked Ship Main Shaft",
+                "nextRoom": "Basement"
+            },
+            "data": {
+                "roomID": 51958,
+                "nextRoomID": 52335
+            },
+			"entry_loadout": "prkd_moat_missiles",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Basement",
+                "room": "Basement",
+                "nextRoom": "Phantoon's Room"
+            },
+            "data": {
+                "roomID": 52335,
+                "nextRoomID": 52499
+            },
+			"entry_loadout": "prkd_moat_missiles",
+			"exit_loadout": "prkd_moat_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Phantoon",
+                "room": "Phantoon's Room",
+                "nextRoom": "Basement"
+            },
+            "data": {
+                "roomID": 52499,
+                "nextRoomID": 52335
+            },
+			"entry_loadout": "prkd_moat_missiles",
+			"exit_loadout": "prkd_phantoon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Basement",
+                "room": "Basement",
+                "nextRoom": "Wrecked Ship Main Shaft"
+            },
+            "data": {
+                "roomID": 52335,
+                "nextRoomID": 51958
+            },
+			"entry_loadout": "prkd_phantoon",
+			"exit_loadout": "prkd_phantoon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Main Shaft",
+                "room": "Wrecked Ship Main Shaft",
+                "nextRoom": "Wrecked Ship West Super Room"
+            },
+            "data": {
+                "roomID": 51958,
+                "nextRoomID": 52648
+            },
+			"entry_loadout": "prkd_phantoon",
+			"exit_loadout": "prkd_phantoon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Left Supers",
+                "room": "Wrecked Ship West Super Room",
+                "nextRoom": "Wrecked Ship Main Shaft"
+            },
+            "data": {
+                "roomID": 52648,
+                "nextRoomID": 51958
+            },
+			"entry_loadout": "prkd_phantoon",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Main Shaft",
+                "room": "Wrecked Ship Main Shaft",
+                "nextRoom": "Attic"
+            },
+            "data": {
+                "roomID": 51958,
+                "nextRoomID": 51794
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ws Attic",
+                "room": "Attic",
+                "nextRoom": "West Ocean"
+            },
+            "data": {
+                "roomID": 51794,
+                "nextRoomID": 37886
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "West Ocean",
+                "room": "West Ocean",
+                "nextRoom": "Bowling Alley Path"
+            },
+            "data": {
+                "roomID": 37886,
+                "nextRoomID": 37985
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Bowling Path",
+                "room": "Bowling Alley Path",
+                "nextRoom": "Bowling Alley"
+            },
+            "data": {
+                "roomID": 37985,
+                "nextRoomID": 51598
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bowling Alley",
+                "room": "Bowling Alley",
+                "nextRoom": "Gravity Suit Room"
+            },
+            "data": {
+                "roomID": 51598,
+                "nextRoomID": 52800
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_wrecked_ship_super_missiles"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Gravity",
+                "room": "Gravity Suit Room",
+                "nextRoom": "West Ocean"
+            },
+            "data": {
+                "roomID": 52800,
+                "nextRoomID": 37886
+            },
+			"entry_loadout": "prkd_wrecked_ship_super_missiles",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "West Ocean",
+                "room": "West Ocean",
+                "nextRoom": "The Moat"
+            },
+            "data": {
+                "roomID": 37886,
+                "nextRoomID": 38399
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Moat",
+                "room": "The Moat",
+                "nextRoom": "Crateria Kihunter Room"
+            },
+            "data": {
+                "roomID": 38399,
+                "nextRoomID": 38028
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Crateria Kihunter Room",
+                "room": "Crateria Kihunter Room",
+                "nextRoom": "Red Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 38028,
+                "nextRoomID": 38442
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Caterpillar Room",
+                "room": "Caterpillar Room",
+                "nextRoom": "Hellway"
+            },
+            "data": {
+                "roomID": 41762,
+                "nextRoomID": 41719
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Hellway",
+                "room": "Hellway",
+                "nextRoom": "Red Tower"
+            },
+            "data": {
+                "roomID": 41719,
+                "nextRoomID": 41555
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Red Tower",
+                "room": "Red Tower",
+                "nextRoom": "Bat Room"
+            },
+            "data": {
+                "roomID": 41555,
+                "nextRoomID": 41949
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Red Tower (Frog Farm)",
+                "room": "Red Tower",
+                "nextRoom": "Bat Room"
+            },
+            "data": {
+                "roomID": 41555,
+                "nextRoomID": 41949
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit",
+			"greaterThanorEqualEnemiesKilled": 1
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bat Room",
+                "room": "Bat Room",
+                "nextRoom": "Below Spazer"
+            },
+            "data": {
+                "roomID": 41949,
+                "nextRoomID": 41992
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Below Spazer",
+                "room": "Below Spazer",
+                "nextRoom": "Spazer"
+            },
+            "data": {
+                "roomID": 41992,
+                "nextRoomID": 42055
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_gravity_suit"
+        },
+				{
+            "names": {
+                "individual_room_time_name": "Spazer",
+                "room": "Spazer",
+                "nextRoom": "Below Spazer"
+            },
+            "data": {
+                "roomID": 42055,
+                "nextRoomID": 41992
+            },
+			"entry_loadout": "prkd_gravity_suit",
+			"exit_loadout": "prkd_spazer"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Below Spazer",
+                "room": "Below Spazer",
+                "nextRoom": "West Tunnel"
+            },
+            "data": {
+                "roomID": 41992,
+                "nextRoomID": 53076
+			},
+			"entry_loadout": "prkd_spazer",
+			"exit_loadout": "prkd_spazer"
+		},
+		{
+            "names": {
+                "individual_room_time_name": "Glass Tunnel",
+                "room": "Glass Tunnel",
+                "nextRoom": "East Tunnel"
+            },
+            "data": {
+                "roomID": 52987,
+                "nextRoomID": 53120
+			},
+			"entry_loadout": "prkd_spazer",
+			"exit_loadout": "prkd_spazer"
+		},
+		        {
+            "names": {
+                "individual_room_time_name": "Warehouse Entrance",
+                "room": "Warehouse Entrance",
+                "nextRoom": "Business Center"
+            },
+            "data": {
+                "roomID": 42657,
+                "nextRoomID": 42974
+            },
+			"entry_loadout": "prkd_spazer",
+			"exit_loadout": "prkd_spazer"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Business Center",
+                "room": "Business Center",
+                "nextRoom": "Hi Jump Energy Tank Room"
+            },
+            "data": {
+                "roomID": 42974,
+                "nextRoomID": 43585
+            },
+			"entry_loadout": "prkd_spazer",
+			"exit_loadout": "prkd_spazer"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Hi Jump E Tank",
+                "room": "Hi Jump Energy Tank Room",
+                "nextRoom": "Hi Jump Boots Room"
+            },
+            "data": {
+                "roomID": 43585,
+                "nextRoomID": 43493
+            },
+			"entry_loadout": "prkd_spazer",
+			"exit_loadout": "prkd_hi_jump_boots_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Hi Jump",
+                "room": "Hi Jump Boots Room",
+                "nextRoom": "Hi Jump Energy Tank Room"
+            },
+            "data": {
+                "roomID": 43493,
+                "nextRoomID": 43585
+            },
+			"entry_loadout": "prkd_hi_jump_boots_etank",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Hi Jump E Tank",
+                "room": "Hi Jump Energy Tank Room",
+                "nextRoom": "Business Center"
+            },
+            "data": {
+                "roomID": 43585,
+                "nextRoomID": 42974
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Business Center",
+                "room": "Business Center",
+                "nextRoom": "Ice Beam Gate Room"
+            },
+            "data": {
+                "roomID": 42974,
+                "nextRoomID": 43029
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ice Gate Room",
+                "room": "Ice Beam Gate Room",
+                "nextRoom": "Ice Beam Acid Room"
+            },
+            "data": {
+                "roomID": 43029,
+                "nextRoomID": 42845
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ice Acid Room",
+                "room": "Ice Beam Acid Room",
+                "nextRoom": "Ice Beam Snake Room"
+            },
+            "data": {
+                "roomID": 42845,
+                "nextRoomID": 43193
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+		 {
+            "names": {
+                "individual_room_time_name": "Ice Snake Room",
+                "room": "Ice Beam Snake Room",
+                "nextRoom": "Ice Beam Room"
+            },
+            "data": {
+                "roomID": 43193,
+                "nextRoomID": 43152
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_hi_jump_boots"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ice Room",
+                "room": "Ice Beam Room",
+                "nextRoom": "Ice Beam Snake Room"
+            },
+            "data": {
+                "roomID": 43152,
+                "nextRoomID": 43193
+            },
+			"entry_loadout": "prkd_hi_jump_boots",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ice Snake Room",
+                "room": "Ice Beam Snake Room",
+                "nextRoom": "Ice Beam Acid Room"
+            },
+            "data": {
+                "roomID": 43193,
+                "nextRoomID": 42845
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ice Escape",
+                "room": "Ice Beam Acid Room",
+                "nextRoom": "Ice Beam Gate Room"
+            },
+            "data": {
+                "roomID": 42845,
+                "nextRoomID": 43029
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Ice Gate Room",
+                "room": "Ice Beam Gate Room",
+                "nextRoom": "Business Center"
+            },
+            "data": {
+                "roomID": 43029,
+                "nextRoomID": 42974
+			},
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Business Center",
+                "room": "Business Center",
+                "nextRoom": "Cathedral Entrance"
+            },
+            "data": {
+                "roomID": 42974,
+                "nextRoomID": 42931
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Cathedral Entrance",
+                "room": "Cathedral Entrance",
+                "nextRoom": "Cathedral"
+            },
+            "data": {
+                "roomID": 42931,
+                "nextRoomID": 42888
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Cathedral",
+                "room": "Cathedral",
+                "nextRoom": "Rising Tide"
+            },
+            "data": {
+                "roomID": 42888,
+                "nextRoomID": 44963
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Rising Tide",
+                "room": "Rising Tide",
+                "nextRoom": "Bubble Mountain"
+            },
+            "data": {
+                "roomID": 44963,
+                "nextRoomID": 44211
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bubble Mountain",
+                "room": "Bubble Mountain",
+                "nextRoom": "Bat Cave"
+            },
+            "data": {
+                "roomID": 44211,
+                "nextRoomID": 45178
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Bat Cave",
+                "room": "Bat Cave",
+                "nextRoom": "Speed Booster Hall"
+            },
+            "data": {
+                "roomID": 45178,
+                "nextRoomID": 44272
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Speed Booster Hallway",
+                "room": "Speed Booster Hall",
+                "nextRoom": "Speed Booster Room"
+            },
+            "data": {
+                "roomID": 44272,
+                "nextRoomID": 44315
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_ice_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Speed Booster",
+                "room": "Speed Booster Room",
+                "nextRoom": "Speed Booster Hall"
+            },
+            "data": {
+                "roomID": 44315,
+                "nextRoomID": 44272
+            },
+			"entry_loadout": "prkd_ice_beam",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Speed Booster Hallway",
+                "room": "Speed Booster Hall",
+                "nextRoom": "Bat Cave"
+            },
+            "data": {
+                "roomID": 44272,
+                "nextRoomID": 45178
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bat Cave",
+                "room": "Bat Cave",
+                "nextRoom": "Bubble Mountain"
+            },
+            "data": {
+                "roomID": 45178,
+                "nextRoomID": 44211
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bubble Mountain",
+                "room": "Bubble Mountain",
+                "nextRoom": "Single Chamber"
+            },
+            "data": {
+                "roomID": 44211,
+                "nextRoomID": 44382
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Single Chamber",
+                "room": "Single Chamber",
+                "nextRoom": "Double Chamber"
+            },
+            "data": {
+                "roomID": 44382,
+                "nextRoomID": 44461
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Double chamber (with wave missiles)",
+                "room": "Double Chamber",
+                "nextRoom": "Wave Beam Room"
+            },
+            "data": {
+                "roomID": 44461,
+                "nextRoomID": 44510
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+		{
+			"not_yet_implemented": true,
+            "names": {
+                "individual_room_time_name": "Double chamber (skipping wave missiles)",
+                "room": "Double Chamber",
+                "nextRoom": "Wave Beam Room"
+            },
+            "data": {
+                "roomID": 44461,
+                "nextRoomID": 44510
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_speed_booster"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Wave",
+                "room": "Wave Beam Room",
+                "nextRoom": "Double Chamber"
+            },
+            "data": {
+                "roomID": 44510,
+                "nextRoomID": 44461
+            },
+			"entry_loadout": "prkd_speed_booster",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Double Chamber Revisit",
+                "room": "Double Chamber",
+                "nextRoom": "Single Chamber"
+            },
+            "data": {
+                "roomID": 44461,
+                "nextRoomID": 44382
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Single Chamber",
+                "room": "Single Chamber",
+                "nextRoom": "Spiky Platforms Tunnel"
+            },
+            "data": {
+                "roomID": 44382,
+                "nextRoomID": 44551
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Lava room with movin' platform dudes",
+                "room": "Spiky Platforms Tunnel",
+                "nextRoom": "Volcano Room"
+            },
+            "data": {
+                "roomID": 44551,
+                "nextRoomID": 44594
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Lava room with poppin' rocks",
+                "room": "Volcano Room",
+                "nextRoom": "Kronic Boost Room"
+            },
+            "data": {
+                "roomID": 44594,
+                "nextRoomID": 44660
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Lava spark setup room",
+                "room": "Kronic Boost Room",
+                "nextRoom": "Lava Dive Room"
+            },
+            "data": {
+                "roomID": 44660,
+                "nextRoomID": 44820
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		        {
+            "names": {
+				"not_yet_implemented": true,
+                "individual_room_time_name": "Lava dive (with gravity jump)",
+                "room": "Lava Dive Room",
+                "nextRoom": "Lower Norfair Elevator"
+            },
+            "data": {
+                "roomID": 44820,
+                "nextRoomID": 44863
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Lava dive (with lava spark)",
+                "room": "Lava Dive Room",
+                "nextRoom": "Lower Norfair Elevator"
+            },
+            "data": {
+                "roomID": 44820,
+                "nextRoomID": 44863
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Ln Elevator",
+                "room": "Lower Norfair Elevator",
+                "nextRoom": "Main Hall"
+            },
+            "data": {
+                "roomID": 44863,
+                "nextRoomID": 45622
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ln Main Hallway",
+                "room": "Main Hall",
+                "nextRoom": "Fast Pillars Setup Room"
+            },
+            "data": {
+                "roomID": 45622,
+                "nextRoomID": 45989
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Fast Pillars Setup",
+                "room": "Fast Pillars Setup Room",
+                "nextRoom": "Pillar Room"
+            },
+            "data": {
+                "roomID": 45989,
+                "nextRoomID": 46167
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Pillar Room",
+                "room": "Pillar Room",
+                "nextRoom": "The Worst Room In The Game"
+            },
+            "data": {
+                "roomID": 46167,
+                "nextRoomID": 46253
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Writg",
+                "room": "The Worst Room In The Game",
+                "nextRoom": "Amphitheatre"
+            },
+            "data": {
+                "roomID": 46253,
+                "nextRoomID": 46309
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Amphitheatre",
+                "room": "Amphitheatre",
+                "nextRoom": "Red Kihunter Shaft"
+            },
+            "data": {
+                "roomID": 46309,
+                "nextRoomID": 46469
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Red Kihunter Shaft",
+                "room": "Red Kihunter Shaft",
+                "nextRoom": "Wasteland"
+            },
+            "data": {
+                "roomID": 46469,
+                "nextRoomID": 46549
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Wasteland",
+                "room": "Wasteland",
+                "nextRoom": "Metal Pirates Room"
+            },
+            "data": {
+                "roomID": 46549,
+                "nextRoomID": 46635
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metal Pirates Room",
+                "room": "Metal Pirates Room",
+                "nextRoom": "Plowerhouse Room"
+            },
+            "data": {
+                "roomID": 46635,
+                "nextRoomID": 46210
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Plowerhouse Room",
+                "room": "Plowerhouse Room",
+                "nextRoom": "Lower Norfair Farming Room"
+            },
+            "data": {
+                "roomID": 46210,
+                "nextRoomID": 45946
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ln Farming Room",
+                "room": "Lower Norfair Farming Room",
+                "nextRoom": "Ridley's Room"
+            },
+            "data": {
+                "roomID": 45946,
+                "nextRoomID": 45870
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_wave_beam"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ridley (with x-factors)",
+                "room": "Ridley's Room",
+                "nextRoom": "Lower Norfair Farming Room"
+            },
+            "data": {
+                "roomID": 45870,
+                "nextRoomID": 45946,
+				"entryState":{
+						"equips":{
+							"iceBeam":false,
+							"spazerBeam":false,
+							"waveBeam":true
+						}
 				}
-            }
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_ridley"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Ridley (without x-factors)",
+                "room": "Ridley's Room",
+                "nextRoom": "Lower Norfair Farming Room"
+            },
+            "data": {
+                "roomID": 45870,
+                "nextRoomID": 45946,
+				"entryState":{
+						"equips":{
+							"iceBeam":true,
+							"spazerBeam":true,
+							"waveBeam":true
+						}
+				}
+            },
+			"entry_loadout": "prkd_wave_beam",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ln Farming Room",
+                "room": "Lower Norfair Farming Room",
+                "nextRoom": "Plowerhouse Room"
+            },
+            "data": {
+                "roomID": 45946,
+                "nextRoomID": 46210
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Plowerhouse Room",
+                "room": "Plowerhouse Room",
+                "nextRoom": "Metal Pirates Room"
+            },
+            "data": {
+                "roomID": 46210,
+                "nextRoomID": 46635
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metal Pirates Room",
+                "room": "Metal Pirates Room",
+                "nextRoom": "Wasteland"
+            },
+            "data": {
+                "roomID": 46635,
+                "nextRoomID": 46549
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Wasteland",
+                "room": "Wasteland",
+                "nextRoom": "Red Kihunter Shaft"
+            },
+            "data": {
+                "roomID": 46549,
+                "nextRoomID": 46469
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Red Kihunter Shaft",
+                "room": "Red Kihunter Shaft",
+                "nextRoom": "Lower Norfair Fireflea Room"
+            },
+            "data": {
+                "roomID": 46469,
+                "nextRoomID": 46830
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ln Fireflea Room",
+                "room": "Lower Norfair Fireflea Room",
+                "nextRoom": "Lower Norfair Spring Ball Maze Room"
+            },
+            "data": {
+                "roomID": 46830,
+                "nextRoomID": 46352
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Ln Springball Maze Room",
+                "room": "Lower Norfair Spring Ball Maze Room",
+                "nextRoom": "Three Musketeers' Room"
+            },
+            "data": {
+                "roomID": 46352,
+                "nextRoomID": 46678
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Three Musketeers",
+                "room": "Three Musketeers' Room",
+                "nextRoom": "Single Chamber"
+            },
+            "data": {
+                "roomID": 46678,
+                "nextRoomID": 44382
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Single Chamber",
+                "room": "Single Chamber",
+                "nextRoom": "Bubble Mountain"
+            },
+            "data": {
+                "roomID": 44382,
+                "nextRoomID": 44211
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Bubble Mountain",
+                "room": "Bubble Mountain",
+                "nextRoom": "Upper Norfair Farming Room"
+            },
+            "data": {
+                "roomID": 44211,
+                "nextRoomID": 44914
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Frogway",
+                "room": "Frog Speedway",
+                "nextRoom": "Frog Savestation"
+            },
+            "data": {
+                "roomID": 45318,
+                "nextRoomID": 45415
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Business Center",
+                "room": "Business Center",
+                "nextRoom": "Warehouse Entrance"
+            },
+            "data": {
+                "roomID": 42974,
+                "nextRoomID": 42657
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Warehouse Entrance",
+                "room": "Warehouse Entrance",
+                "nextRoom": "Warehouse Zeela Room"
+            },
+            "data": {
+                "roomID": 42657,
+                "nextRoomID": 42097
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Warehouse Zeela Room",
+                "room": "Warehouse Zeela Room",
+                "nextRoom": "Warehouse Kihunter Room"
+            },
+            "data": {
+                "roomID": 42097,
+                "nextRoomID": 42202
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Party Zone",
+                "room": "Warehouse Kihunter Room",
+                "nextRoom": "Baby Kraid Room"
+            },
+            "data": {
+                "roomID": 42202,
+                "nextRoomID": 42273
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid Hallway",
+                "room": "Baby Kraid Room",
+                "nextRoom": "Kraid Eye Door Room"
+            },
+            "data": {
+                "roomID": 42273,
+                "nextRoomID": 42347
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid Gedora",
+                "room": "Kraid Eye Door Room",
+                "nextRoom": "Kraid Room"
+            },
+            "data": {
+                "roomID": 42347,
+                "nextRoomID": 42399
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_ridley"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid",
+                "room": "Kraid Room",
+                "nextRoom": "Varia Suit Room"
+            },
+            "data": {
+                "roomID": 42399,
+                "nextRoomID": 42722
+            },
+			"entry_loadout": "prkd_ridley",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Varia",
+                "room": "Varia Suit Room",
+                "nextRoom": "Kraid Room"
+            },
+            "data": {
+                "roomID": 42722,
+                "nextRoomID": 42399
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid",
+                "room": "Kraid Room",
+                "nextRoom": "Kraid Eye Door Room"
+            },
+            "data": {
+                "roomID": 42399,
+                "nextRoomID": 42347
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid Gedora",
+                "room": "Kraid Eye Door Room",
+                "nextRoom": "Baby Kraid Room"
+            },
+            "data": {
+                "roomID": 42347,
+                "nextRoomID": 42273
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Kraid Hallway",
+                "room": "Baby Kraid Room",
+                "nextRoom": "Warehouse Kihunter Room"
+            },
+            "data": {
+                "roomID": 42273,
+                "nextRoomID": 42202
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Party Zone",
+                "room": "Warehouse Kihunter Room",
+                "nextRoom": "Warehouse Zeela Room"
+            },
+            "data": {
+                "roomID": 42202,
+                "nextRoomID": 42097
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Warehouse Zeela Room",
+                "room": "Warehouse Zeela Room",
+                "nextRoom": "Warehouse Entrance"
+            },
+            "data": {
+                "roomID": 42097,
+                "nextRoomID": 42657
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Warehouse Entrance",
+                "room": "Warehouse Entrance",
+                "nextRoom": "East Tunnel"
+            },
+            "data": {
+                "roomID": 42657,
+                "nextRoomID": 53120
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "East Tunnel",
+                "room": "East Tunnel",
+                "nextRoom": "Glass Tunnel"
+            },
+            "data": {
+                "roomID": 53120,
+                "nextRoomID": 52987
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Glass Tunnel",
+                "room": "Glass Tunnel",
+                "nextRoom": "Main Street"
+            },
+            "data": {
+                "roomID": 52987,
+                "nextRoomID": 53193
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Main Street",
+                "room": "Main Street",
+                "nextRoom": "Fish Tank"
+            },
+            "data": {
+                "roomID": 53193,
+                "nextRoomID": 53271
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Fish Tank",
+                "room": "Fish Tank",
+                "nextRoom": "Mt. Everest"
+            },
+            "data": {
+                "roomID": 53271,
+                "nextRoomID": 53433
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+		        {
+            "names": {
+                "individual_room_time_name": "Mt. Everest",
+                "room": "Mt. Everest",
+                "nextRoom": "Crab Shaft"
+            },
+            "data": {
+                "roomID": 53433,
+                "nextRoomID": 53667
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Crab Shaft",
+                "room": "Crab Shaft",
+                "nextRoom": "Aqueduct"
+            },
+            "data": {
+                "roomID": 53667,
+                "nextRoomID": 54695
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Aqueduct",
+                "room": "Aqueduct",
+                "nextRoom": "Botwoon Hallway"
+            },
+            "data": {
+                "roomID": 54695,
+                "nextRoomID": 54807
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Botwoon Hallway",
+                "room": "Botwoon Hallway",
+                "nextRoom": "Botwoon's Room"
+            },
+            "data": {
+                "roomID": 54807,
+                "nextRoomID": 55646
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_kraid"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Botwoon",
+                "room": "Botwoon's Room",
+                "nextRoom": "Botwoon Energy Tank Room"
+            },
+            "data": {
+                "roomID": 55646,
+                "nextRoomID": 55268
+            },
+			"entry_loadout": "prkd_kraid",
+			"exit_loadout": "prkd_botwoon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Botwoon E Tank",
+                "room": "Botwoon Energy Tank Room",
+                "nextRoom": "Halfie Climb Room"
+            },
+            "data": {
+                "roomID": 55268,
+                "nextRoomID": 55571
+            },
+			"entry_loadout": "prkd_botwoon",
+			"exit_loadout": "prkd_botwoon_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Halfie Climb",
+                "room": "Halfie Climb Room",
+                "nextRoom": "Colosseum"
+            },
+            "data": {
+                "roomID": 55571,
+                "nextRoomID": 55082
+            },
+			"entry_loadout": "prkd_botwoon_etank",
+			"exit_loadout": "prkd_botwoon_etank"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Colloseum",
+                "room": "Colosseum",
+                "nextRoom": "The Precious Room"
+            },
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55183
+            },
+			"entry_loadout": "prkd_botwoon_etank",
+			"exit_loadout": "prkd_botwoon_etank"
+        },
+		{
+			"not_yet_implemented": true,
+            "names": {
+                "individual_room_time_name": "Colloseum (No Halfie)",
+                "room": "Colosseum",
+                "nextRoom": "The Precious Room"
+            },
+            "data": null
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Pre Draygon",
+                "room": "The Precious Room",
+                "nextRoom": "Draygon's Room"
+            },
+            "data": {
+                "roomID": 55183,
+                "nextRoomID": 55904
+            },
+			"entry_loadout": "prkd_botwoon_etank",
+			"exit_loadout": "prkd_botwoon_etank"
+        },
+				{
+            "names": {
+                "individual_room_time_name": "Draygon",
+                "room": "Draygon's Room",
+                "nextRoom": "The Precious Room"
+            },
+            "data": {
+                "roomID": 55904,
+                "nextRoomID": 55183
+            },
+			"entry_loadout": "prkd_botwoon_etank",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Pre Draygon (EITHER spike suit OR no suit)",
+                "room": "The Precious Room",
+                "nextRoom": "Colosseum"
+            },
+            "data": {
+                "roomID": 55183,
+                "nextRoomID": 55082,
+				"entryState": {
+					"blueSuit": false
+				}
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Pre Draygon (ONLY blue suit)",
+                "room": "The Precious Room",
+                "nextRoom": "Colosseum"
+            },
+            "data": {
+                "roomID": 55183,
+                "nextRoomID": 55082,
+				"entryState": {
+					"blueSuit": true
+				}
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Colosseum (Reverse Halfie)",
+                "room": "Colosseum",
+                "nextRoom": "Halfie Climb Room"
+            },
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55571
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+			"not_yet_implemented": true,
+            "names": {
+                "individual_room_time_name": "Colosseum (No Halfie)",
+                "room": "Colosseum",
+                "nextRoom": "Halfie Climb"
+            },
+            "data": null
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Halfie Climb",
+                "room": "Halfie Climb Room",
+                "nextRoom": "Botwoon Energy Tank Room"
+            },
+            "data": {
+                "roomID": 55571,
+                "nextRoomID": 55268
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Botwoon E Tank",
+                "room": "Botwoon Energy Tank Room",
+                "nextRoom": "Botwoon's Room"
+            },
+            "data": {
+                "roomID": 55268,
+                "nextRoomID": 55646
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Botwoon",
+                "room": "Botwoon's Room",
+                "nextRoom": "Botwoon Hallway"
+            },
+            "data": {
+                "roomID": 55646,
+                "nextRoomID": 54807
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Botwoon Hallway",
+                "room": "Botwoon Hallway",
+                "nextRoom": "Aqueduct"
+            },
+            "data": {
+                "roomID": 54807,
+                "nextRoomID": 54695
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Aqueduct",
+                "room": "Aqueduct",
+                "nextRoom": "Crab Shaft"
+            },
+            "data": {
+                "roomID": 54695,
+                "nextRoomID": 54695
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Crab Shaft",
+                "room": "Crab Shaft",
+                "nextRoom": "Mt. Everest"
+            },
+            "data": {
+                "roomID": 53667,
+                "nextRoomID": 53433
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Mt. Everest",
+                "room": "Mt. Everest",
+                "nextRoom": "Red Fish Room"
+            },
+            "data": {
+                "roomID": 53433,
+                "nextRoomID": 53508
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Sephyfish Room",
+                "room": "Red Fish Room",
+                "nextRoom": "Caterpillar Room"
+            },
+            "data": {
+                "roomID": 53508,
+                "nextRoomID": 41762
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Caterpiller Room",
+                "room": "Caterpillar Room",
+                "nextRoom": "Red Brinstar Elevator Room"
+            },
+            "data": {
+                "roomID": 41762,
+                "nextRoomID": 38442
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Crateria Kihunter Room",
+                "room": "Crateria Kihunter Room",
+                "nextRoom": "Crateria Tube"
+            },
+            "data": {
+                "roomID": 38028,
+                "nextRoomID": 38356
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Crateria Tube",
+                "room": "Crateria Tube",
+                "nextRoom": "Landing Site"
+            },
+            "data": {
+                "roomID": 38356,
+                "nextRoomID": 37368
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Landing Site",
+                "room": "Landing Site",
+                "nextRoom": "Parlor and Alcatraz"
+            },
+            "data": {
+                "roomID": 37368,
+                "nextRoomID": 37629
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Parlor",
+                "room": "Parlor and Alcatraz",
+                "nextRoom": "Terminator Room"
+            },
+            "data": {
+                "roomID": 37629,
+                "nextRoomID": 39181
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Terminator",
+                "room": "Terminator Room",
+                "nextRoom": "Green Pirates Shaft"
+            },
+            "data": {
+                "roomID": 39181,
+                "nextRoomID": 39357
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Green Pirate Shaft (no farming)",
+                "room": "Green Pirates Shaft",
+                "nextRoom": "Statues Hallway"
+            },
+            "data": {
+                "roomID": 39357,
+                "nextRoomID": 42477
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+			"not_yet_implemented": true,
+            "names": {
+                "individual_room_time_name": "Green Pirate Shaft (farming)",
+                "room": "Green Pirates Shaft",
+                "nextRoom": "Statues Hallway"
+            },
+            "data": {
+                "roomID": 39357,
+                "nextRoomID": 42477
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Statues Hallway",
+                "room": "Statues Hallway",
+                "nextRoom": "Golden Four"
+            },
+            "data": {
+                "roomID": 42477,
+                "nextRoomID": 42602
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Statues Room",
+                "room": "Golden Four",
+                "nextRoom": "Tourian First Room"
+            },
+            "data": {
+                "roomID": 42602,
+                "nextRoomID": 55982
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Tourian Elevator",
+                "room": "Tourian First Room",
+                "nextRoom": "Metroid Room 1"
+            },
+            "data": {
+                "roomID": 55982,
+                "nextRoomID": 56033
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metroid Room 1",
+                "room": "Metroid Room 1",
+                "nextRoom": "Metroid Room 2"
+            },
+            "data": {
+                "roomID": 56033,
+                "nextRoomID": 56113
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metroid Room 2",
+                "room": "Metroid Room 2",
+                "nextRoom": "Metroid Room 3"
+            },
+            "data": {
+                "roomID": 56113,
+                "nextRoomID": 56189
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metroid Room 3",
+                "room": "Metroid Room 3",
+                "nextRoom": "Metroid Room 4"
+            },
+            "data": {
+                "roomID": 56189,
+                "nextRoomID": 56269
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Metroid Room 4",
+                "room": "Metroid Room 4",
+                "nextRoom": "Blue Hopper Room"
+            },
+            "data": {
+                "roomID": 56269,
+                "nextRoomID": 56345
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Blue Hopper Room",
+                "room": "Blue Hopper Room",
+                "nextRoom": "Dust Torizo Room"
+            },
+            "data": {
+                "roomID": 56345,
+                "nextRoomID": 56421
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Dust Torizo Room",
+                "room": "Dust Torizo Room",
+                "nextRoom": "Big Boy Room"
+            },
+            "data": {
+                "roomID": 56421,
+                "nextRoomID": 56497
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Big Boy Room",
+                "room": "Big Boy Room",
+                "nextRoom": "Seaweed Room"
+            },
+            "data": {
+                "roomID": 56497,
+                "nextRoomID": 56575
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+		{
+            "names": {
+                "individual_room_time_name": "Seaweed Room",
+                "room": "Seaweed Room",
+                "nextRoom": "Tourian Eye Door Room"
+            },
+            "data": {
+                "roomID": 56575,
+                "nextRoomID": 56772
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+		},
+        {
+            "names": {
+                "individual_room_time_name": "Gedora Room",
+                "room": "Tourian Eye Door Room",
+                "nextRoom": "Rinka Shaft"
+            },
+            "data": {
+                "roomID": 56772,
+                "nextRoomID": 56819
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Rinka Shaft",
+                "room": "Rinka Shaft",
+                "nextRoom": "Mother Brain Room"
+            },
+            "data": {
+                "roomID": 56819,
+                "nextRoomID": 56664
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Mother Brain's Room",
+                "room": "Mother Brain Room",
+                "nextRoom": "Tourian Escape Room 1"
+            },
+            "data": {
+                "roomID": 56664,
+                "nextRoomID": 56909
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Escape Room 1",
+                "room": "Tourian Escape Room 1",
+                "nextRoom": "Tourian Escape Room 2"
+            },
+            "data": {
+                "roomID": 56909,
+                "nextRoomID": 56954
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Escape Room 2",
+                "room": "Tourian Escape Room 2",
+                "nextRoom": "Tourian Escape Room 3"
+            },
+            "data": {
+                "roomID": 56954,
+                "nextRoomID": 56999
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Escape Room 3",
+                "room": "Tourian Escape Room 3",
+                "nextRoom": "Tourian Escape Room 4"
+            },
+            "data": {
+                "roomID": 56999,
+                "nextRoomID": 57054
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Leodox Room",
+                "room": "Tourian Escape Room 4",
+                "nextRoom": "Climb"
+            },
+            "data": {
+                "roomID": 57054,
+                "nextRoomID": 38586
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Climb",
+                "room": "Climb",
+                "nextRoom": "Parlor and Alcatraz"
+            },
+            "data": {
+                "roomID": 38586,
+                "nextRoomID": 37629
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Parlor",
+                "room": "Parlor and Alcatraz",
+                "nextRoom": "Landing Site"
+            },
+            "data": {
+                "roomID": 37629,
+                "nextRoomID": 37368
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
+        },
+        {
+            "names": {
+                "individual_room_time_name": "Landing Site",
+                "room": "Landing Site",
+                "nextRoom": "Landing Site"
+            },
+            "data": {
+                "roomID": 37368,
+                "nextRoomID": 37368
+            },
+			"entry_loadout": "prkd_mother_brain",
+			"exit_loadout": "prkd_mother_brain"
         }
     ]
 }

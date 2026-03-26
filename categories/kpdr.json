@@ -410,9 +410,7 @@
             "data": {
                 "roomID": 39357,
                 "nextRoomID": 39273,
-				"exitState": {
-					"missiles": 5
-				}
+				"enemiesKilled": 0
 			},
 			"entry_loadout": "terminator_etank",
 			"exit_loadout": "terminator_etank"
@@ -441,7 +439,8 @@
                 "nextRoomID": 39641
             },
 			"entry_loadout": "terminator_etank",
-			"exit_loadout": "terminator_etank"
+			"exit_loadout": "terminator_etank",
+			"lessThanEnemiesKilled": 2
         },
         {
             "names": {
