@@ -1488,11 +1488,11 @@
             "names": {
                 "individual_room_time_name": "Bowling Path",
                 "room": "Bowling Alley Path",
-                "nextRoom": "Bowling Alley"
+                "nextRoom": "West Ocean Bridge"
             },
             "data": {
                 "roomID": 37985,
-                "nextRoomID": 51598
+                "nextRoomID": 38543
             },
 			"entry_loadout": "kpdr_wrecked_ship_super_missiles",
 			"exit_loadout": "kpdr_wrecked_ship_super_missiles"

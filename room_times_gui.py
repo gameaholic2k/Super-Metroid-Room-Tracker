@@ -257,6 +257,7 @@ class RoomTimeTrackerGUI:
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
         self.table_sheet = self._get_table_sheet(self.room_time_names, self.fastest_room_times, self.average_room_times)
         self.sheet.set_sheet_data(self.table_sheet)
+        self.sheet.set_all_cell_sizes_to_text()
         # Change room selection and label
         self.dropdown_menu_select(None)
 
@@ -274,7 +275,7 @@ class RoomTimeTrackerGUI:
         # append index and update table
         room_logic_index = self.sm.get_run_category_room_logic_index(room_log, self.selected_category)
         if not room_logic_index:
-            self.selection_label.config(text='Room transition not implemented or not applicable to current category')
+            self.selection_label.config(text=f'Unsupported room transition')
             return
 
         #check if room time is a PB
@@ -317,10 +318,9 @@ class RoomTimeTrackerGUI:
         self.room_dropdown_menu.current(room_logic_index)
         self.dropdown_menu_select(None)
 
+        room_time_message = f'{self.room_dropdown_menu.get()}: {room_time}'
         if room_time_pb:
-            room_time_message = f'{self.room_dropdown_menu.get()}: {room_time} ****NEW PB*****'
-        else:
-            room_time_message = f'{self.room_dropdown_menu.get()}: {room_time}'
+            room_time_message = f'{room_time_message} \n ****NEW PB*****'
 
         self.selection_label.config(text=room_time_message)
 
