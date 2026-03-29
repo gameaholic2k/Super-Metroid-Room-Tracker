@@ -429,19 +429,6 @@
 			"entry_loadout": "terminator_etank",
 			"exit_loadout": "terminator_etank"
         },
-		        {
-            "names": {
-                "individual_room_time_name": "Green Brinstar Main Shaft",
-                "room": "Green Brinstar Main Shaft",
-                "nextRoom": "Early Supers Room"
-            },
-            "data": {
-                "roomID": 39641,
-                "nextRoomID": 39880
-            },
-			"entry_loadout": "terminator_etank",
-			"exit_loadout": "terminator_etank"
-        },
         {
             "names": {
                 "individual_room_time_name": "Early Supers Room",
@@ -610,8 +597,7 @@
                 "nextRoomID": 38399
             },
 			"entry_loadout": "prkd_alpha_power_bombs",
-			"exit_loadout": "prkd_alpha_power_bombs",
-			"lessThanEnemiesKilled" : 1
+			"exit_loadout": "prkd_alpha_power_bombs"
         },
         {
             "names": {
@@ -787,11 +773,11 @@
             "names": {
                 "individual_room_time_name": "Bowling Path",
                 "room": "Bowling Alley Path",
-                "nextRoom": "Bowling Alley"
+                "nextRoom": "West Ocean Bridge"
             },
             "data": {
                 "roomID": 37985,
-                "nextRoomID": 51598
+                "nextRoomID": 38543
             },
 			"entry_loadout": "prkd_wrecked_ship_super_missiles",
 			"exit_loadout": "prkd_wrecked_ship_super_missiles"
@@ -1313,13 +1299,15 @@
             },
             "data": {
                 "roomID": 44461,
-                "nextRoomID": 44510
+                "nextRoomID": 44510,
+				"exitState": {
+					"maxMissiles": 20
+				}
             },
 			"entry_loadout": "prkd_speed_booster",
 			"exit_loadout": "prkd_speed_booster"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Double chamber (skipping wave missiles)",
                 "room": "Double Chamber",
@@ -1327,7 +1315,10 @@
             },
             "data": {
                 "roomID": 44461,
-                "nextRoomID": 44510
+                "nextRoomID": 44510,
+				"exitState": {
+					"maxMissiles": 15
+				}
             },
 			"entry_loadout": "prkd_speed_booster",
 			"exit_loadout": "prkd_speed_booster"
@@ -1590,7 +1581,7 @@
                 "roomID": 45870,
                 "nextRoomID": 45946,
 				"entryState":{
-						"equips":{
+						"equipment":{
 							"iceBeam":false,
 							"spazerBeam":false,
 							"waveBeam":true
@@ -1610,7 +1601,7 @@
                 "roomID": 45870,
                 "nextRoomID": 45946,
 				"entryState":{
-						"equips":{
+						"equipment":{
 							"iceBeam":true,
 							"spazerBeam":true,
 							"waveBeam":true
@@ -2250,7 +2241,7 @@
             },
             "data": {
                 "roomID": 54695,
-                "nextRoomID": 54695
+                "nextRoomID": 53667
             },
 			"entry_loadout": "prkd_draygon",
 			"exit_loadout": "prkd_draygon"

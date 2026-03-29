@@ -16,6 +16,7 @@ class FileManager():
         self._pre_defined_room_states_file = self.roomtime_config['pre_defined_room_states_file']
         self.channel_name = self.roomtime_config['channel_name']
         self.api_token = self.roomtime_config['api_token']
+        self.default_run_category = self.get_default_run_category()
 
     @property
     def config_file(self):
@@ -48,7 +49,20 @@ class FileManager():
         '''
         json_files = glob.glob(f'{self.run_category_directory}/*.json')
         return json_files
-    
+
+
+    def get_default_run_category(self):
+        default_category_config = self.roomtime_config['default_run_category']
+        if not default_category_config:
+            first_category = self.get_run_categories()[0]
+            self.roomtime_config['default_run_category'] = first_category
+            with open(self.config_file, 'w') as file_handler:
+                self.config.write(file_handler)
+            return first_category
+        else:
+            return default_category_config
+
+
     def get_run_categories(self):
         run_categories = []
         run_category_files = self.get_run_category_files()

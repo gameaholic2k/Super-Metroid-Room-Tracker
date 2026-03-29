@@ -12,8 +12,9 @@ class RunCategory():
         self.config = file_loader.FileManager()
         self.run_category = run_category
         self.run_category_room_paths = self.get_run_category_room_paths()
-
+        self.room_time_names = self.get_room_time_names()
         # Must be initialized by the SuperMetroidRooms class as it contains the compare room and log methods to build the index
+
         self.run_category_indexes = None
         self.fastest_room_times = None
         self.average_room_times = None
@@ -113,9 +114,11 @@ class SuperMetroidRooms():
 
         :return:
         '''
-        run_categories = []
+        # run_categories = []
+        run_categories = {}
         for category in self.sm_files.get_run_categories():
-            run_categories.append(RunCategory(category))
+            # run_categories.append(RunCategory(category))
+            run_categories[category] = RunCategory(category)
         return run_categories
     
 
@@ -234,7 +237,7 @@ class SuperMetroidRooms():
 
         :return:
         '''
-        for category in self.run_categories:
+        for category in self.run_categories.values():
             index_filename = category.get_run_category_index_filename()
             if not Path(index_filename).exists():
                 self.rebuild_run_category_index(category)

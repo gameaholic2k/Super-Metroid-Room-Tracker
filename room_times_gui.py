@@ -22,12 +22,11 @@ class RoomTimeTrackerGUI:
 
         self.sm = read_funtoon_data.SuperMetroidRooms()
         #TODO select last saved category from config file
-        self.selected_category = self.sm.run_categories[0]
+        # self.selected_category = self.sm.run_categories[0]
+        self.selected_category = self.sm.run_categories[self.sm.sm_files.default_run_category]
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-        self.room_time_names = self.selected_category.get_room_time_names()
-        self.table_sheet = self._get_table_sheet(self.room_time_names, self.fastest_room_times, self.average_room_times)
-        self.log_handler = None
+        self.table_sheet = self._get_table_sheet()
 
         #TODO create another class for storing widgets
         self.root = tkinter.Tk()
@@ -112,9 +111,10 @@ class RoomTimeTrackerGUI:
         self.selection_label.grid(row=4, column=0, padx=5, pady=5)
 
         # Drop down menu for rooms
-        self.room_dropdown_menu = ttk.Combobox(self.right_frame, state='readonly', values=self.room_time_names)
+        self.room_dropdown_menu = ttk.Combobox(self.right_frame, state='readonly')
         self.room_dropdown_menu.grid(row=0, column=0, padx=5, pady=5)
         self.room_dropdown_menu.bind("<<ComboboxSelected>>", self.dropdown_menu_select)
+        self.update_drop_down_menu()
 
         self.stop_thread = threading.Event()
         self.thread = None
@@ -122,8 +122,29 @@ class RoomTimeTrackerGUI:
         self.status_label = ttk.Label(self.root, text="Status: Disconnected", style='Red.TLabel')
         self.status_label.pack()
 
+        # Initialize the shared Tkinter variable for run category index
+        self.run_category_radio_button_selection = tkinter.StringVar(value=self.selected_category.run_category)
+        for row, category in enumerate(self.sm.run_categories.values()):
+            ttk.Radiobutton(self.right_frame, text=category.run_category, variable=self.run_category_radio_button_selection, value=category.run_category, command=self.change_category).grid(row=row+5, column=0, sticky="W")
+
         self.root.mainloop()
 
+    def update_drop_down_menu(self):
+        max_len = max(len(str(item)) for item in self.selected_category.room_time_names)
+        # Set the combobox width to that length
+        self.room_dropdown_menu.config(width=max_len)
+        self.room_dropdown_menu['values'] = self.selected_category.room_time_names
+
+    def change_category(self):
+        radio_button_selection = self.run_category_radio_button_selection.get()
+        self.selected_category = self.sm.run_categories[radio_button_selection]
+        self.sm.rebuild_run_category_index(self.selected_category)
+
+        # Refreshes all indexes and logs and updates the default category
+        self.refresh_tables()
+        self.sm.sm_files.roomtime_config['default_run_category'] = radio_button_selection
+        with open(self.sm.sm_files.config_file, 'w') as file_handler:
+            self.sm.sm_files.config.write(file_handler)
 
     def on_button_click_connect(self):
         '''
@@ -142,7 +163,7 @@ class RoomTimeTrackerGUI:
                 self.status_label.config(text="Status: Disconnecting...", style='Red.TLabel')
                 self.connect_button.config(state=tkinter.NORMAL)
 
-    def _get_table_sheet(self, room_time_names, fastest_room_times, average_room_times):
+    def _get_table_sheet(self):
         '''
 
         :param room_time_names:
@@ -151,8 +172,12 @@ class RoomTimeTrackerGUI:
         :return:
         '''
         table_sheet = []
-        for index, room in enumerate(room_time_names):
-            table_sheet.append([room, fastest_room_times[index], average_room_times[index]])
+        # self.selected_category.room_time_names, self.fastest_room_times, self.average_room_times
+        print(f'Room Time length: {len(self.selected_category.room_time_names)}')
+        print(f'Fastest Room Time length: {len(self.fastest_room_times)}')
+        print(f'Average Room Time length: {len(self.average_room_times)}')
+        for index, room in enumerate(self.selected_category.room_time_names):
+            table_sheet.append([room, self.fastest_room_times[index], self.average_room_times[index]])
         return table_sheet
 
     # def dropdown_menu_select(self, event, room_times):
@@ -166,11 +191,8 @@ class RoomTimeTrackerGUI:
         run_category_index = self.room_dropdown_menu.current()
         room_times = self.sm.get_room_times_from_index(self.selected_category)
 
-        # Combine the lists into tuples, sort by the first element (sorted_room_times),
-        # and unzip them back into separate variables.
-        # Then apply the changes to the run category index
-        # sorted_room_times, sorted_category_index = zip(*sorted(zip(room_times[run_category_index], self.selected_category.run_category_indexes[run_category_index])))
-
+        print(f'length of roomtimes {len(room_times)}')
+        print(f'{self.selected_category.run_category} index: {run_category_index} for dropdown menu')
         if not room_times[run_category_index]:
             return
         # Combine lists into a list of tuples, sort based on the first element of the tuples (sorted_room_times), then unzip
@@ -255,10 +277,11 @@ class RoomTimeTrackerGUI:
         # refresh best and average times table
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-        self.table_sheet = self._get_table_sheet(self.room_time_names, self.fastest_room_times, self.average_room_times)
+        self.table_sheet = self._get_table_sheet()
         self.sheet.set_sheet_data(self.table_sheet)
         self.sheet.set_all_cell_sizes_to_text()
         # Change room selection and label
+        self.update_drop_down_menu()
         self.dropdown_menu_select(None)
 
     def append_room_time(self, room_log):
@@ -294,8 +317,6 @@ class RoomTimeTrackerGUI:
         print(f'Writing to {self.selected_category.get_run_category_index_filename()}')
 
         #If log entry for that room is empty, initialize a list with that value
-        # if is_deeply_empty(self.selected_category.run_category_indexes[room_logic_index]):
-        # if '[]' in self.selected_category.run_category_indexes[room_logic_index]:
         if not self.selected_category.run_category_indexes[room_logic_index]:
             self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
         else:
@@ -311,7 +332,7 @@ class RoomTimeTrackerGUI:
         # refresh best and average times table
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-        self.table_sheet = self._get_table_sheet(self.room_time_names, self.fastest_room_times, self.average_room_times)
+        self.table_sheet = self._get_table_sheet()
         self.sheet.set_sheet_data(self.table_sheet)
         self.sheet.set_all_cell_sizes_to_text()
         # Change room selection and label
