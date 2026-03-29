@@ -7,8 +7,8 @@ Special thanks to [TAW](https://github.com/Tawling) for not only making this pos
 
 
 # Usage
-Installing required modules
+Installing required modules <br/>
 python -m pip install -r requirements.txt
 
-Loading the application
+Loading the application <br/>
 python main.py
