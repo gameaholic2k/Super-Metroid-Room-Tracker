@@ -137,21 +137,12 @@ class SuperMetroidRooms():
                     items.append((new_key, v))
             return dict(items)
 
-        # if pass_if_subset_is_none is True and subset_dict is None:
-        #     return True
-
-
         #Flattens the dictionary to compare all of the nested values
         flattened_subset_dict = flatten_dict(subset_dict)
         flattened_uperset_dict = flatten_dict(superset_dict)
 
         for item in flattened_subset_dict.items():
             if not item in flattened_uperset_dict.items():
-                # if debug:
-                #     print('Subset dict:')
-                #     print(json.dumps(subset_dict, indent=4))
-
-                #     print(f'Value: {item} not found \n in {superset_dict.items()}')
                 return False
         return True
     
@@ -285,7 +276,8 @@ class SuperMetroidRooms():
             if room_log_index:
                 room_log_indexes.append(room_log_index)
             else:
-                room_log_indexes.append([[]])
+                # room_log_indexes.append([[]])
+                room_log_indexes.append([])
             counter += 1
             print(f'{(counter / num_of_rooms)*100}% Complete')
 
@@ -303,18 +295,10 @@ class SuperMetroidRooms():
         '''
         room_times = []
         for log_index_list in run_category.run_category_indexes:
-            if not any(item == '[]' or item == [] for item in log_index_list):
-                # print(log_index_list)
-                # print(f'log index length {len(self.room_logs)}')
+            if not any(item == [] for item in log_index_list):
                 room_times.append([self.room_logs[int(idx)]['data']['practiceFrames'] for idx in log_index_list])
-                # room_times_row = []
-                # # print(log_index_list)
-                # for idx in log_index_list:
-                #     # print(idx)
-                #     room_times_row.append(self.room_logs[int(idx)]['data']['frameCount'])
-                # room_times.append(room_times_row)
             else:
-                room_times.append([''])
+                room_times.append([])
         return room_times
     
     def get_fastest_room_times(self, run_category):
@@ -326,7 +310,7 @@ class SuperMetroidRooms():
         room_times_table = []
         frame_data_table = self.get_room_times_from_index(run_category)
         for room_times in frame_data_table:
-            if room_times and room_times != ['']:
+            if room_times:
                 fastest_time = min(room_times)
                 formatted_time = convert_framecount_to_seconds(fastest_time)
             else:
@@ -343,7 +327,7 @@ class SuperMetroidRooms():
         room_times_table = []
         frame_data_table = self.get_room_times_from_index(run_category)
         for room_times in frame_data_table:
-            if room_times and room_times != ['']:
+            if room_times:
                 average_time = round(statistics.mean(room_times))
                 formatted_time = convert_framecount_to_seconds(average_time)
             else:
@@ -375,3 +359,4 @@ def convert_framecount_to_seconds(framecount):
     seconds = int(framecount / 60)
     remainder_frames = framecount % 60
     return f'{seconds}.{remainder_frames}'
+

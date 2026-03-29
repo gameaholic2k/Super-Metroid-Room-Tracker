@@ -1,24 +1,7 @@
-import os
 import json
-import csv
 import glob
-import copy
 from pathlib import Path
 import configparser
-from dataclasses import dataclass
-
-# config = configparser.ConfigParser()
-# config.read('config.ini')
-# roomtime_config = config['roomtime_config']
-# channel = roomtime_config['twitch_channel_name']
-# token = roomtime_config['token']
-# # room_log_file = roomtime_config['room_log_file']
-# category_directory = roomtime_config['category_folder']
-# room_log_directory = roomtime_config['room_log_file_folder']
-# address_file = roomtime_config['address_file']
-# pre_defined_room_states_file = roomtime_config['pre_defined_room_states_file']
-
-
 
 class FileManager():
     def __init__(self):
@@ -101,11 +84,3 @@ class FileManager():
         with open(self._address_file, 'r') as f:
             address_definitions = json.load(f)['definitions']
         return address_definitions
-
-
-
-
-
-# kpdr = RunCategory('KPDR')
-# kpdr_room_paths = kpdr.get_run_category_room_paths()
-# print(json.dumps(kpdr_room_paths, indent=4))

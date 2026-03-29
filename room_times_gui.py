@@ -36,6 +36,7 @@ class RoomTimeTrackerGUI:
         #Styles
         self.ttk_style = ttk.Style()
         self.ttk_style.configure('Red.TLabel', foreground='red')
+        self.ttk_style.configure('Orange.TLabel', foreground='orange')
         self.ttk_style.configure('Green.TLabel', foreground='green')
 
         # Create a top frame
@@ -134,7 +135,7 @@ class RoomTimeTrackerGUI:
                 self.stop_thread.clear()
                 self.thread = threading.Thread(target=self.websocket_thread_function, daemon=True, args=(self.channel_entry.get(), self.api_token_entry.get()))
                 self.thread.start()
-                self.status_label.config(text="Status: Connecting...", style='Green.TLabel')
+                self.status_label.config(text="Status: Connecting...", style='Orange.TLabel')
                 self.connect_button.config(state=tkinter.DISABLED)
             else:
                 self.stop_thread.set()
@@ -170,6 +171,8 @@ class RoomTimeTrackerGUI:
         # Then apply the changes to the run category index
         # sorted_room_times, sorted_category_index = zip(*sorted(zip(room_times[run_category_index], self.selected_category.run_category_indexes[run_category_index])))
 
+        if not room_times[run_category_index]:
+            return
         # Combine lists into a list of tuples, sort based on the first element of the tuples (sorted_room_times), then unzip
         print(room_times[run_category_index])
         print(self.selected_category.run_category_indexes[run_category_index])
@@ -288,14 +291,17 @@ class RoomTimeTrackerGUI:
 
         # Update category index list and file
         print(f'Writing to {self.selected_category.get_run_category_index_filename()}')
-        print(f'Length of index {len(self.selected_category.run_category_indexes[room_logic_index])}')
-        print(type(self.selected_category.run_category_indexes[room_logic_index][0]))
-        print(self.selected_category.run_category_indexes[room_logic_index][0])
+
         #If log entry for that room is empty, initialize a list with that value
         # if is_deeply_empty(self.selected_category.run_category_indexes[room_logic_index]):
-        if '[]' in self.selected_category.run_category_indexes[room_logic_index]:
+        # if '[]' in self.selected_category.run_category_indexes[room_logic_index]:
+        if not self.selected_category.run_category_indexes[room_logic_index]:
             self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
         else:
+            print(f'Length of index {len(self.selected_category.run_category_indexes[room_logic_index])}')
+            print(type(self.selected_category.run_category_indexes[room_logic_index][0]))
+            print(self.selected_category.run_category_indexes[room_logic_index][0])
+
             self.selected_category.run_category_indexes[room_logic_index].append(str(last_log_index))
         with open(self.selected_category.get_run_category_index_filename(), 'w', newline='') as csvfile_handler:
             csvwriter = csv.writer(csvfile_handler)
@@ -327,8 +333,7 @@ class RoomTimeTrackerGUI:
         '''
         try:
             with connect(f'wss://funtoon.party/tracking?channel={channel}&token={token}') as ws:
-                self.status_label.config(text=f"Connected", style='Green.TLabel')
-                # self.status_label.config(text="Status: Connected")
+                self.status_label.config(text=f"Authenticated.  Waiting for Funtoon to detect the next room transition.", style='Orange.TLabel')
                 print('Connecting to funtoon')
                 #Update config files
                 if channel != self.sm.sm_files.roomtime_config['channel_name'] or token != self.sm.sm_files.roomtime_config['api_token']:
@@ -339,6 +344,7 @@ class RoomTimeTrackerGUI:
                         self.sm.sm_files.config.write(file_handler)
 
                 print(self.stop_thread.is_set())
+                ws.send('test')
                 while not self.stop_thread.is_set():
                     print('test')
                     msg = ws.recv()
@@ -348,7 +354,7 @@ class RoomTimeTrackerGUI:
                         print('invalid auth')
                         return
                     print(f'Connected to funtoon as {channel}')
-                    self.status_label.config(text=f'Connected to funtoon as {channel}')
+                    self.status_label.config(text=f'Connected to funtoon as {channel}', style='Green.TLabel')
                     self.connect_button.config(state=tkinter.DISABLED)
                     msgObj = json.loads(msg)
                     event = msgObj['event']
@@ -366,3 +372,4 @@ class RoomTimeTrackerGUI:
             # self.message_queue.put("Disconnected")
             self.status_label.config(text=f"Disconnected", style='Red.TLabel')
             self.connect_button.config(state=tkinter.NORMAL)
+
