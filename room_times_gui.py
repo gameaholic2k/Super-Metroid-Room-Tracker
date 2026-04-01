@@ -9,6 +9,7 @@ import time
 import threading
 import traceback
 import csv
+from queue import Queue, Empty
 
 @dataclass
 class FrameData:
@@ -17,9 +18,7 @@ class FrameData:
 
 
 class RoomTimeTrackerGUI:
-
     def __init__(self):
-
         self.sm = read_funtoon_data.SuperMetroidRooms()
         #TODO select last saved category from config file
         # self.selected_category = self.sm.run_categories[0]
@@ -31,6 +30,9 @@ class RoomTimeTrackerGUI:
         #TODO create another class for storing widgets
         self.root = tkinter.Tk()
         self.root.title("Room Time Tracker")
+
+        # Thread-safe queue for communication
+        self.queue = Queue()
 
         #Styles
         self.ttk_style = ttk.Style()
@@ -93,7 +95,6 @@ class RoomTimeTrackerGUI:
 
         # Listbox for roomtimes
         self.listbox = tkinter.Listbox(self.right_frame, selectmode=tkinter.SINGLE) # height sets the number of lines visible
-        # listbox.pack(pady=10, padx=10, fill=ttk.BOTH, expand=True)
         self.listbox.grid(row=1, column=0, padx=5, pady=5)
 
         # Attach a scrollbar (optional, but recommended for long lists)
@@ -102,7 +103,6 @@ class RoomTimeTrackerGUI:
         self.listbox.config(yscrollcommand=self.scrollbar.set)
 
         # Add a button to show the selected value
-        # self.select_button = ttk.Button(self.right_frame, text="Delete selected room log", command=lambda: self.show_selection(self.selected_category.run_category_indexes, self.sm.room_logs))
         self.select_button = ttk.Button(self.right_frame, text="Delete selected room log", command=self.delete_entry)
         self.select_button.grid(row=3, column=0, padx=5, pady=5)
 
@@ -154,14 +154,55 @@ class RoomTimeTrackerGUI:
         if self.api_token_entry.get() and self.channel_entry.get():
             if self.thread is None or not self.thread.is_alive():
                 self.stop_thread.clear()
-                self.thread = threading.Thread(target=self.websocket_thread_function, daemon=True, args=(self.channel_entry.get(), self.api_token_entry.get()))
+                self.thread = threading.Thread(target=self.websocket_thread_function, daemon=True)
                 self.thread.start()
                 self.status_label.config(text="Status: Connecting...", style='Orange.TLabel')
                 self.connect_button.config(state=tkinter.DISABLED)
+                # Start checking the queue
+                self.root.after(100, self.listen_for_result)
             else:
                 self.stop_thread.set()
                 self.status_label.config(text="Status: Disconnecting...", style='Red.TLabel')
                 self.connect_button.config(state=tkinter.NORMAL)
+
+    def listen_for_result(self):
+        try:
+            # Check for messages without blocking
+            while True:
+                msg = self.queue.get_nowait()
+
+                print(f'Message type {type(msg)}')
+                print(msg)
+                if msg == 'Authenticated.  Waiting for Funtoon to detect the next room transition.':
+                    self.status_label.config(text=msg, style='Orange.TLabel')
+                elif msg == f'Connected to funtoon as {self.channel_entry.get()}':
+                    self.status_label.config(text=msg, style='Green.TLabel')
+                    self.connect_button.config(state=tkinter.DISABLED)
+                    # return  # Stop checking
+                elif msg == 'invalid auth':
+                    self.status_label.config(text=f"invalid auth", style='Red.TLabel')
+                    self.connect_button.config(state=tkinter.NORMAL)
+                    # return  # Stop checking
+                elif msg == 'Disconnected':
+                    self.status_label.config(text=f"Disconnected", style='Red.TLabel')
+                    self.connect_button.config(state=tkinter.NORMAL)
+                    # return  # Stop checking
+
+                elif msg == 'test':
+                        print('queue test')
+
+                if type(msg) == dict:
+                    print(f"Message Event {msg['event']}")
+                    if msg['event'] == 'smRoomTime':
+                        room_log = {'timestamp': time.time(),
+                                     'data': msg['data']}
+                        self.append_room_time(room_log)
+                # Schedule this function to run again after a delay (e.g., 100ms)
+                self.root.after(100, self.listen_for_result)
+
+        except Empty:
+            # No message, check again later
+            self.root.after(100, self.listen_for_result)
 
     def _get_table_sheet(self):
         '''
@@ -346,7 +387,7 @@ class RoomTimeTrackerGUI:
 
         self.selection_label.config(text=room_time_message)
 
-    def websocket_thread_function(self, channel, token):
+    def websocket_thread_function(self):
         '''
         Main method to collect the funtoon data
         :param channel:
@@ -354,8 +395,10 @@ class RoomTimeTrackerGUI:
         :return:
         '''
         try:
+            channel = self.channel_entry.get()
+            token = self.api_token_entry.get()
             with connect(f'wss://funtoon.party/tracking?channel={channel}&token={token}') as ws:
-                self.status_label.config(text=f"Authenticated.  Waiting for Funtoon to detect the next room transition.", style='Orange.TLabel')
+                self.queue.put('Authenticated.  Waiting for Funtoon to detect the next room transition.')
                 print('Connecting to funtoon')
                 #Update config files
                 if channel != self.sm.sm_files.roomtime_config['channel_name'] or token != self.sm.sm_files.roomtime_config['api_token']:
@@ -365,33 +408,26 @@ class RoomTimeTrackerGUI:
                     with open(self.sm.sm_files.config_file, 'w') as file_handler:
                         self.sm.sm_files.config.write(file_handler)
 
-                print(self.stop_thread.is_set())
-                ws.send('test')
+                msg = ws.recv()
+                if msg == '"invalid auth"':
+                    self.queue.put('invalid auth')
+                    print('invalid auth')
+                    return
+                print(f'Connected to funtoon as {channel}')
+                self.queue.put(f'Connected to funtoon as {channel}')
                 while not self.stop_thread.is_set():
-                    print('test')
                     msg = ws.recv()
-                    print(msg)
-                    if msg == '"invalid auth"':
-                        self.status_label.config(text=f"invalid auth")
-                        print('invalid auth')
-                        return
-                    print(f'Connected to funtoon as {channel}')
-                    self.status_label.config(text=f'Connected to funtoon as {channel}', style='Green.TLabel')
-                    self.connect_button.config(state=tkinter.DISABLED)
                     msgObj = json.loads(msg)
                     event = msgObj['event']
                     print(event)
                     if event == 'smRoomTime':
-                        room_log = {'timestamp': time.time(),
-                                     'data': msgObj['data']}
-                        self.append_room_time(room_log)
+                        print(f'Pre-message type {type(msgObj)}')
+                        self.queue.put(msgObj)
 
         except Exception as e:
-            self.status_label.config(text=f"Error: {e}")
             print(f"Error: {e}")
             traceback.print_exc()
         finally:
-            # self.message_queue.put("Disconnected")
-            self.status_label.config(text=f"Disconnected", style='Red.TLabel')
-            self.connect_button.config(state=tkinter.NORMAL)
+            self.queue.put("Disconnected")
+
 
