@@ -304,10 +304,11 @@ class RoomTimeTrackerGUI:
         #check if room time is a PB
         room_time = read_funtoon_data.convert_framecount_to_seconds(room_log["data"]["practiceFrames"])
 
-        if room_time < self.fastest_room_times[room_logic_index]:
-            room_time_pb = True
-        else:
-            room_time_pb = False
+        # Initlizes the PB to false.  Set it to true if there's a PB or not a first time room entry
+        room_time_pb = False
+        if self.fastest_room_times[room_logic_index]:
+            if room_time < self.fastest_room_times[room_logic_index]:
+                room_time_pb = True
 
         # self.sm.append_index_log(room_dict, self.selected_category)
         self.sm.room_logs = self.sm.sm_files.get_room_logs()
