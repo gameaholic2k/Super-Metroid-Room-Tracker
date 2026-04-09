@@ -183,13 +183,15 @@ class SuperMetroidRooms():
                     return False
                 
             else:
+                item_data = None
                 base_index = int('0xD870', 16)
                 for item in definition_collected_items:
                     for address_data in self.sm_address_data:
                         if address_data['name'] == item:
                             item_data = address_data
                             break
-
+                    if not item_data:
+                        return False
                     address = int(item_data['address'], 16)
                     value = int(item_data['value'], 16)
                     index = address - base_index
@@ -361,5 +363,5 @@ def convert_framecount_to_seconds(framecount):
         return None
     seconds = int(framecount / 60)
     remainder_frames = framecount % 60
-    return f'{seconds}.{remainder_frames}'
+    return f'{seconds}.{str(remainder_frames).zfill(2)}'
 
