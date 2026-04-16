@@ -365,3 +365,16 @@ def convert_framecount_to_seconds(framecount):
     remainder_frames = framecount % 60
     return f'{seconds}.{str(remainder_frames).zfill(2)}'
 
+
+def convert_room_time_to_framecount(room_time):
+    '''
+
+    :param framecount:
+    :return:
+    '''
+    if not room_time:
+        return None
+    seconds, frames = map(int, room_time.split('.'))
+    total_frames = seconds * 60 + frames
+    return total_frames
+
