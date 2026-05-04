@@ -16,6 +16,12 @@ class FileManager():
         self._pre_defined_room_states_file = self.roomtime_config['pre_defined_room_states_file']
         self.channel_name = self.roomtime_config['channel_name']
         self.api_token = self.roomtime_config['api_token']
+
+        # GUI config entries
+        self.gui_config = self.config['gui_config']
+        self.window_size = self.gui_config['window_size']
+        self.min_horizontal_size = self.gui_config['min_horizontal_size']
+        self.min_vertical_size = self.gui_config['min_vertical_size']
         self.default_run_category = self.get_default_run_category()
 
     @property
