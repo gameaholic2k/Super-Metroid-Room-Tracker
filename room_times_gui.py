@@ -672,19 +672,9 @@ class RoomTimeTrackerGUI:
         selected_room_to_restore = self.current_selected_actual_row
         self.refresh_tables()
 
-    def get_log_index_from_selections(self, room_dropdown_menu, listbox, log_index_table):
-        '''
-
-        :param room_dropdown_menu:
-        :param listbox:
-        :param log_index_table:
-        :return:
-        '''
-        row_index = room_dropdown_menu.current()
-        # Get the first selected index (curselection() returns a tuple even for single select
+    def get_log_index_from_selections(self, listbox):
         column_index = listbox.curselection()[0]
-        return int(self.current_display_log_indexes[row_index][column_index])
-
+        return int(self.current_display_log_indexes[column_index])
 
     def refresh_tables(self):
         '''
