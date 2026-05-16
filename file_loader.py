@@ -2,27 +2,37 @@ import json
 import glob
 from pathlib import Path
 import configparser
+from typing import Final
+# from dataclasses import dataclass
+#
+# @dataclass
+# class DefaultConfig:
+#     room_log_file: str = 'list_of_roomtimes.jsonl'
+#     run_category_directory: str = 'categories'
+#     address_file: str = 'SuperMetroid.json'
+#     room_log_directory: str = 'logs'
+#     pre_defined_room_states_file: str = 'pre_defined_room_states.json'
+#     channel_name: str = ''
+#     api_token: str = ''
+#
+#     # GUI config entries
+#     window_size: str = '1100x760'
+#     min_horizontal_size: int = 780
+#     min_vertical_size: int = 620
+#     default_run_category: str = 'KPDR'
 
-class FileManager():
+
+
+
+
+class FileManager:
+    DEFAULT_CATEGORY_KEY: Final = 'default_run_category'
+
     def __init__(self):
-        self.config = configparser.ConfigParser()
         self._config_file = 'config.ini'
-        self.config.read(self.config_file)
+        self.config = self.initialize_config()
         self.roomtime_config = self.config['roomtime_config']
-        self._room_log_file = self.roomtime_config['room_log_file']
-        self._run_category_directory = self.roomtime_config['category_folder']
-        self._address_file = self.roomtime_config['address_file']
-        self._room_log_directory = self.roomtime_config['room_log_file_folder']
-        self._pre_defined_room_states_file = self.roomtime_config['pre_defined_room_states_file']
-        self.channel_name = self.roomtime_config['channel_name']
-        self.api_token = self.roomtime_config['api_token']
-
-        # GUI config entries
         self.gui_config = self.config['gui_config']
-        self.window_size = self.gui_config['window_size']
-        self.min_horizontal_size = self.gui_config['min_horizontal_size']
-        self.min_vertical_size = self.gui_config['min_vertical_size']
-        self.default_run_category = self.get_default_run_category()
 
     @property
     def config_file(self):
@@ -30,23 +40,70 @@ class FileManager():
 
     @property
     def room_log_file(self):
-        return self._room_log_file
-    
+        return self.roomtime_config['room_log_file']
+
     @property
     def run_category_directory(self):
-        return self._run_category_directory
-    
+        return self.roomtime_config['category_folder']
+
     @property
-    def address_file(self):
-        return self._address_file
-    
+    def _address_file(self):
+        return self.roomtime_config['address_file']
+
     @property
     def room_log_directory(self):
-        return self._room_log_directory
-    
+        return self.roomtime_config['room_log_file_folder']
+
     @property
     def pre_defined_room_states_file(self):
-        return self._pre_defined_room_states_file
+        return self.roomtime_config['pre_defined_room_states_file']
+
+    @property
+    def channel_name(self):
+        return self.roomtime_config['channel_name']
+
+    @property
+    def api_token(self):
+        return self.roomtime_config['api_token']
+
+    # GUI properties
+    @property
+    def window_size(self):
+        return self.gui_config['window_size']
+
+    @property
+    def min_horizontal_size(self):
+        return self.gui_config['min_horizontal_size']
+
+    @property
+    def min_vertical_size(self):
+        return self.gui_config['min_vertical_size']
+
+    def initialize_config(self):
+        config = configparser.ConfigParser()
+
+        if not Path(self._config_file).exists():
+            config['roomtime_config'] = {
+                'room_log_file': 'list_of_roomtimes.jsonl',
+                'category_folder': 'categories',
+                'address_file': 'SuperMetroid.json',
+                'pre_defined_room_states_file': 'pre_defined_room_states.json',
+                'room_log_file_folder': 'logs',
+                'channel_name': '',
+                'api_token': '',
+                'default_run_category': ''
+            }
+            config['gui_config'] = {
+                'window_size': '1100x760',
+                'min_horizontal_size': '780',
+                'min_vertical_size': '620'
+            }
+
+            with open(self._config_file, 'w') as config_file:
+                config.write(config_file)
+
+        config.read(self._config_file)
+        return config
 
     def get_run_category_files(self):
         '''
@@ -56,18 +113,16 @@ class FileManager():
         json_files = glob.glob(f'{self.run_category_directory}/*.json')
         return json_files
 
-
     def get_default_run_category(self):
-        default_category_config = self.roomtime_config['default_run_category']
+        default_category_config = self.roomtime_config[self.DEFAULT_CATEGORY_KEY]
         if not default_category_config:
             first_category = self.get_run_categories()[0]
-            self.roomtime_config['default_run_category'] = first_category
+            self.roomtime_config[self.DEFAULT_CATEGORY_KEY] = first_category
             with open(self.config_file, 'w') as file_handler:
                 self.config.write(file_handler)
             return first_category
         else:
             return default_category_config
-
 
     def get_run_categories(self):
         run_categories = []

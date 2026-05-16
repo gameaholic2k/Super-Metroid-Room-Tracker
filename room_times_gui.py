@@ -22,7 +22,7 @@ class RoomTimeTrackerGUI:
         self.sm = read_funtoon_data.SuperMetroidRooms()
         #TODO select last saved category from config file
         # self.selected_category = self.sm.run_categories[0]
-        self.selected_category = self.sm.run_categories[self.sm.sm_files.default_run_category]
+        self.selected_category = self.sm.run_categories[self.sm.sm_files.get_default_run_category()]
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
 
@@ -328,96 +328,6 @@ class RoomTimeTrackerGUI:
             return None
         return self.visible_row_to_actual_row[visible_row]
 
-        # # Create a top frame
-        # self.top_frame = tkinter.Frame(self.root)
-        # self.top_frame.pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=True, padx=10, pady=5)
-        #
-        # # Create a right frame
-        # self.right_frame = tkinter.Frame(self.root)
-        # self.right_frame.pack(side=tkinter.RIGHT, fill=tkinter.BOTH, expand=True, padx=10, pady=5)
-        #
-        # # Create a bottom frame
-        # self.bottom_frame = tkinter.Frame(self.root)
-        # self.bottom_frame.pack(side=tkinter.BOTTOM, fill=tkinter.BOTH, expand=True, padx=10, pady=5)
-
-        # # Channel label
-        # self.channel_label = ttk.Label(self.top_frame, text="Twitch Channel Name:")
-        # self.channel_label.grid(row=0, column=0, padx=5, pady=5)
-        #
-        # # Channel Entry Widget
-        # # The key is the 'show="*" ' option
-        # self.channel_entry = ttk.Entry(self.top_frame)
-        # self.channel_entry.grid(row=1, column=0, padx=5, pady=5)
-        # self.channel_entry.focus() # Set focus to the entry box initially
-        # self.channel_entry.insert(0, self.sm.sm_files.channel_name)
-        #
-        # # API Token label
-        # self.api_token_label = ttk.Label(self.top_frame, text="FUNtoon API Token:")
-        # self.api_token_label.grid(row=0, column=1, padx=5, pady=5)
-        #
-        # # API Entry Widget
-        # # The key is the 'show="*" ' option
-        # self.api_token_entry = ttk.Entry(self.top_frame, show="*")
-        # self.api_token_entry.grid(row=1, column=1, padx=5, pady=5)
-        # self.api_token_entry.focus() # Set focus to the entry box initially
-        # self.api_token_entry.insert(0, self.sm.sm_files.api_token)
-        #
-        # self.connect_button = ttk.Button(self.top_frame, text="Connect", command=self.on_button_click_connect)
-        # self.connect_button.grid(row=0, column=2, padx=5, pady=5)
-        #
-        # # Spreadsheet for times
-        # self.sheet = Sheet(self.bottom_frame, height=500, width=700)
-        # self.sheet.grid(row=0, column=0, padx=5, pady=5)
-
-
-
-
-        # self.sheet.headers(["Room name", "Fastest Time", "Average Time"])
-        # self.sheet.set_sheet_data(self.table_sheet)
-        # self.sheet.set_all_cell_sizes_to_text()
-        # self.sheet.enable_bindings((
-        #     "single_select",  # Allow selecting single cells
-        #     "row_select",     # Allow selecting full rows
-        #     "column_select",  # Allow selecting full columns
-        #     "select_rows",    # Enable row selection
-        #     "drag_select",    # Enable drag selection
-        #     "copy",           # Enable copy spreadsheet
-        # ))
-        #
-        # # Listbox for roomtimes
-        # self.listbox = tkinter.Listbox(self.right_frame, selectmode=tkinter.SINGLE) # height sets the number of lines visible
-        # self.listbox.grid(row=1, column=0, padx=5, pady=5)
-        #
-        # # Attach a scrollbar (optional, but recommended for long lists)
-        # self.scrollbar = ttk.Scrollbar(self.root, orient=tkinter.VERTICAL, command=self.listbox.yview)
-        # self.scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-        # self.listbox.config(yscrollcommand=self.scrollbar.set)
-        #
-        # # Add a button to show the selected value
-        # self.select_button = ttk.Button(self.right_frame, text="Delete selected room log", command=self.delete_entry)
-        # self.select_button.grid(row=3, column=0, padx=5, pady=5)
-        #
-        # # Add a label to display the selection result
-        # self.selection_label = ttk.Label(self.right_frame, text="Selected: None")
-        # self.selection_label.grid(row=4, column=0, padx=5, pady=5)
-        #
-        # # Drop down menu for rooms
-        # self.room_dropdown_menu = ttk.Combobox(self.right_frame, state='readonly')
-        # self.room_dropdown_menu.grid(row=0, column=0, padx=5, pady=5)
-        # self.room_dropdown_menu.bind("<<ComboboxSelected>>", self.dropdown_menu_select)
-        # self.update_drop_down_menu()
-        #
-        #
-        #
-        # self.status_label = ttk.Label(self.root, text="Status: Disconnected", style='Red.TLabel')
-        # self.status_label.pack()
-        #
-        # # Initialize the shared Tkinter variable for run category index
-        #
-        # for row, category in enumerate(self.sm.run_categories.values()):
-        #     ttk.Radiobutton(self.right_frame, text=category.run_category, variable=self.run_category_radio_button_selection, value=category.run_category, command=self.change_category).grid(row=row+5, column=0, sticky="W")
-
-
     def change_category(self):
         radio_button_selection = self.run_category_radio_button_selection.get()
         self.selected_category = self.sm.run_categories[radio_button_selection]
@@ -703,7 +613,6 @@ class RoomTimeTrackerGUI:
             self.room_pb_label.config(text="PB: None")
 
 
-
     def append_room_time(self, room_log):
         '''
 
@@ -793,8 +702,8 @@ class RoomTimeTrackerGUI:
                 self.queue.put('Authenticated.  Waiting for Funtoon to detect the next room transition.')
                 print('Connecting to funtoon')
                 #Update config files
-                if channel != self.sm.sm_files.roomtime_config['channel_name'] or \
-                        token != self.sm.sm_files.roomtime_config['api_token']:
+                if channel != self.sm.sm_files.channel_name or \
+                        token != self.sm.sm_files.api_token:
                     print(f'Updating config file {self.sm.sm_files.config_file}')
                     self.sm.sm_files.roomtime_config['channel_name'] = channel
                     self.sm.sm_files.roomtime_config['api_token'] = token

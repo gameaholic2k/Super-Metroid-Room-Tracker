@@ -86,9 +86,7 @@ class RunCategory():
                 room_path['entryCollectedItems'] = entry_collected_items
                 room_path['exitCollectedItems'] = exit_collected_items
 
-                # updated_run_category_room_path.append(room_path)
         return run_category_room_paths
-        # return updated_run_category_room_path
 
     def get_room_time_names(self) -> list:
         '''
@@ -114,10 +112,8 @@ class SuperMetroidRooms():
 
         :return:
         '''
-        # run_categories = []
         run_categories = {}
         for category in self.sm_files.get_run_categories():
-            # run_categories.append(RunCategory(category))
             run_categories[category] = RunCategory(category)
         return run_categories
     
@@ -281,7 +277,6 @@ class SuperMetroidRooms():
             if room_log_index:
                 room_log_indexes.append(room_log_index)
             else:
-                # room_log_indexes.append([[]])
                 room_log_indexes.append([])
             counter += 1
             print(f'{(counter / num_of_rooms)*100}% Complete')
