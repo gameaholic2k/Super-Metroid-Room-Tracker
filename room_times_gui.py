@@ -1,5 +1,4 @@
 import json
-from dataclasses import dataclass
 import read_funtoon_data
 import tkinter
 from tkinter import ttk
@@ -11,72 +10,14 @@ import traceback
 import csv
 from queue import Queue, Empty
 
-@dataclass
-class FrameData:
-    index: int
-    frame_count: str
 
-
-class RoomTimeTrackerGUI:
-    def __init__(self):
-        self.sm = read_funtoon_data.SuperMetroidRooms()
-        #TODO select last saved category from config file
-        # self.selected_category = self.sm.run_categories[0]
-        self.selected_category = self.sm.run_categories[self.sm.sm_files.get_default_run_category()]
-        self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
-        self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-
-        #TODO create another class for storing widgets
-        # TK Root
-        self.root = tkinter.Tk()
-        self.root.title("Room Time Tracker")
-        self.root.geometry(self.sm.sm_files.window_size)
-        self.root.minsize(int(self.sm.sm_files.min_horizontal_size), int(self.sm.sm_files.min_vertical_size))
-
-        # Thread-safe queue for communication
-        self.queue = Queue()
-        self.stop_thread = threading.Event()
-        self.thread = None
-
-        # Tk variables
-        self.hide_empty_rows_var = tkinter.BooleanVar(value=False)
-        self.run_category_radio_button_selection = tkinter.StringVar(value=self.selected_category.run_category)
-
-        # Selection / row-mapping state
-        self.visible_row_to_actual_row = []
-        self.actual_row_to_visible_row = {}
-        self.current_selected_actual_row = None
-
-        # Display-order mapping for the currently selected room's listbox entries.
-        # Keep this separate from the underlying chronology/index order.
-        self.current_display_log_indexes = []
-
-        #Styles
-        self.ttk_style = ttk.Style()
-        self.ttk_style.configure('Red.TLabel', foreground='red')
-        self.ttk_style.configure('Orange.TLabel', foreground='orange')
-        self.ttk_style.configure('Green.TLabel', foreground='green')
-        self.ttk_style.configure('StatusTitle.TLabel', font=('TkDefaultFont', 10, 'bold'))
-        self.ttk_style.configure("StatusValue.TLabel", font=('TkDefaultFont', 14, 'bold'))
-        self.ttk_style.configure("PanelHeader.TLabel", font=('TkDefaultFont', 10, 'bold'))
-
-        # Main window grid config
-        self.root.rowconfigure(0, weight=0)  # top status banner
-        self.root.rowconfigure(1, weight=1)  # main content
-        self.root.rowconfigure(2, weight=0)  # bottom utility bar
-        self.root.columnconfigure(0, weight=1)
-
-        # Frames
-        self.status_frame = ttk.Frame(self.root, padding=(12, 10))
-        self.status_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
-
-        self.main_frame = ttk.Frame(self.root)
+class MainFrame:
+    def __init__(self, root, selected_category, run_categories, refresh_tables_func, change_category_func,
+                 delete_entry_func):
+        # Main content grid
+        self.main_frame = ttk.Frame(root)
         self.main_frame.grid(row=1, column=0, sticky="nsew", padx=10, pady=5)
 
-        self.utility_frame = ttk.Frame(self.root, padding=(8, 8))
-        self.utility_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(5, 0))
-
-        # Main content grid
         self.main_frame.rowconfigure(0, weight=1)
         self.main_frame.columnconfigure(0, weight=3)
         self.main_frame.columnconfigure(1, weight=2)
@@ -94,6 +35,116 @@ class RoomTimeTrackerGUI:
         self.detail_frame.rowconfigure(1, weight=1)
         self.detail_frame.columnconfigure(0, weight=1)
 
+        # Left: summary table
+        self.table_sheet = None
+        self.sheet = Sheet(self.table_frame)
+        self.sheet.grid(row=0, column=0, sticky="nsew")
+        self.sheet.headers(["Room Name", "Fastest Time", "Average Time"])
+        self.sheet.set_all_cell_sizes_to_text()
+        self.sheet.enable_bindings((
+            "single_select",
+            "row_select",
+            "column_select",
+            "select_rows",
+            "drag_select",
+            "copy",
+            "arrowkeys",
+        ))
+
+        # Tk variables
+        self.hide_empty_rows_var = tkinter.BooleanVar(value=False)
+        self.run_category_radio_button_selection = tkinter.StringVar(value=selected_category)
+
+        self.hide_empty_checkbox = ttk.Checkbutton(
+            self.table_frame,
+            text="Hide empty rows",
+            variable=self.hide_empty_rows_var,
+            command=refresh_tables_func
+        )
+        self.hide_empty_checkbox.grid(row=1, column=0, sticky="w", pady=(8, 0))
+
+        # Run category radios
+        self.category_frame = ttk.Frame(self.detail_frame)
+        self.category_frame.grid(row=3, column=0, sticky="w", pady=(8, 0))
+        for row, category in enumerate(run_categories):
+            ttk.Radiobutton(
+                self.category_frame,
+                text=category.run_category,
+                variable=self.run_category_radio_button_selection,
+                value=category.run_category,
+                command=change_category_func
+            ).grid(row=row, column=0, sticky="w")
+
+            # Right: detail panel
+        self.detail_header = ttk.Label(
+            self.detail_frame,
+            text="Selected Room History",
+            style="PanelHeader.TLabel"
+        )
+        self.detail_header.grid(row=0, column=0, sticky="w", pady=(0, 8))
+
+        self.listbox = tkinter.Listbox(self.detail_frame, selectmode=tkinter.SINGLE)
+        self.listbox.grid(row=1, column=0, sticky="nsew")
+
+        self.scrollbar = ttk.Scrollbar(
+            self.detail_frame,
+            orient=tkinter.VERTICAL,
+            command=self.listbox.yview
+        )
+        self.scrollbar.grid(row=1, column=1, sticky="ns")
+        self.listbox.config(yscrollcommand=self.scrollbar.set)
+
+        self.select_button = ttk.Button(
+            self.detail_frame,
+            text="Delete Selected Room Time",
+            command=delete_entry_func
+        )
+        self.select_button.grid(row=2, column=0, sticky="ew", pady=(8, 4))
+
+    def get_selected_sheet_visible_row(self):
+        getter_names = [
+            "get_currently_selected",
+            "currently_selected",
+            "get_selected_cells",
+            "get_selected_rows",
+        ]
+
+        for name in getter_names:
+            if hasattr(self.sheet, name):
+                value = getattr(self.sheet, name)()
+
+                if name == "get_selected_rows" and value:
+                    if isinstance(value, (list, tuple)):
+                        first = value[0]
+                        if isinstance(first, int):
+                            return first
+
+                if isinstance(value, tuple):
+                    if len(value) >= 1 and isinstance(value[0], int):
+                        return value[0]
+
+                if hasattr(value, "row"):
+                    row = getattr(value, "row")
+                    if isinstance(row, int):
+                        return row
+
+                if isinstance(value, dict):
+                    row = value.get("row")
+                    if isinstance(row, int):
+                        return row
+
+                if isinstance(value, (list, tuple)) and value:
+                    first = value[0]
+                    if isinstance(first, tuple) and len(first) >= 1 and isinstance(first[0], int):
+                        return first[0]
+
+            return None
+
+
+class StatusFrame:
+    def __init__(self, root):
+        self.status_frame = ttk.Frame(root, padding=(12, 10))
+        self.status_frame.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
         # Status banner layout
         self.status_frame.columnconfigure(0, weight=0)
         self.status_frame.columnconfigure(1, weight=0)
@@ -129,70 +180,11 @@ class RoomTimeTrackerGUI:
         )
         self.room_pb_label.grid(row=1, column=2, sticky="w", padx=(20, 0), pady=(4, 0))
 
-        # Left: summary table
-        self.table_sheet = self._get_table_sheet()
 
-        self.sheet = Sheet(self.table_frame)
-        self.sheet.grid(row=0, column=0, sticky="nsew")
-        self.sheet.headers(["Room Name", "Fastest Time", "Average Time"])
-        self.sheet.set_sheet_data(self.table_sheet)
-        self.sheet.set_all_cell_sizes_to_text()
-        self.sheet.enable_bindings((
-            "single_select",
-            "row_select",
-            "column_select",
-            "select_rows",
-            "drag_select",
-            "copy",
-            "arrowkeys",
-        ))
-        self._bind_sheet_selection_events()
-
-        self.hide_empty_checkbox = ttk.Checkbutton(
-            self.table_frame,
-            text="Hide empty rows",
-            variable=self.hide_empty_rows_var,
-            command=self.refresh_tables
-        )
-        self.hide_empty_checkbox.grid(row=1, column=0, sticky="w", pady=(8, 0))
-
-        # Right: detail panel
-        self.detail_header = ttk.Label(
-            self.detail_frame,
-            text="Selected Room History",
-            style="PanelHeader.TLabel"
-        )
-        self.detail_header.grid(row=0, column=0, sticky="w", pady=(0, 8))
-
-        self.listbox = tkinter.Listbox(self.detail_frame, selectmode=tkinter.SINGLE)
-        self.listbox.grid(row=1, column=0, sticky="nsew")
-
-        self.scrollbar = ttk.Scrollbar(
-            self.detail_frame,
-            orient=tkinter.VERTICAL,
-            command=self.listbox.yview
-        )
-        self.scrollbar.grid(row=1, column=1, sticky="ns")
-        self.listbox.config(yscrollcommand=self.scrollbar.set)
-
-        self.select_button = ttk.Button(
-            self.detail_frame,
-            text="Delete Selected Room Time",
-            command=self.delete_entry
-        )
-        self.select_button.grid(row=2, column=0, sticky="ew", pady=(8, 4))
-
-        # Run category radios
-        self.category_frame = ttk.Frame(self.detail_frame)
-        self.category_frame.grid(row=3, column=0, sticky="w", pady=(8, 0))
-        for row, category in enumerate(self.sm.run_categories.values()):
-            ttk.Radiobutton(
-                self.category_frame,
-                text=category.run_category,
-                variable=self.run_category_radio_button_selection,
-                value=category.run_category,
-                command=self.change_category
-            ).grid(row=row, column=0, sticky="w")
+class UtilityFrame:
+    def __init__(self, root, channel_name, api_token, on_button_click_connect_func):
+        self.utility_frame = ttk.Frame(root, padding=(8, 8))
+        self.utility_frame.grid(row=2, column=0, sticky="ew", padx=10, pady=(5, 0))
 
         # Bottom utility bar
         self.utility_frame.columnconfigure(1, weight=1)
@@ -203,19 +195,19 @@ class RoomTimeTrackerGUI:
 
         self.channel_entry = ttk.Entry(self.utility_frame)
         self.channel_entry.grid(row=0, column=1, padx=(0, 12), pady=2, sticky="ew")
-        self.channel_entry.insert(0, self.sm.sm_files.channel_name)
+        self.channel_entry.insert(0, channel_name)
 
         self.api_token_label = ttk.Label(self.utility_frame, text="FUNtoon API Token:")
         self.api_token_label.grid(row=0, column=2, padx=(0, 5), pady=2, sticky="w")
 
         self.api_token_entry = ttk.Entry(self.utility_frame, show="*")
         self.api_token_entry.grid(row=0, column=3, padx=(0, 12), pady=2, sticky="ew")
-        self.api_token_entry.insert(0, self.sm.sm_files.api_token)
+        self.api_token_entry.insert(0, api_token)
 
         self.connect_button = ttk.Button(
             self.utility_frame,
             text="Connect",
-            command=self.on_button_click_connect
+            command=on_button_click_connect_func
         )
         self.connect_button.grid(row=0, column=4, padx=(0, 12), pady=2, sticky="w")
 
@@ -231,10 +223,85 @@ class RoomTimeTrackerGUI:
 
         self.channel_entry.focus()
 
+
+class RoomTimeTrackerGUI:
+    def __init__(self):
+        self.sm = read_funtoon_data.SuperMetroidRooms()
+        # TODO select last saved category from config file
+        self.selected_category = self.sm.run_categories[self.sm.sm_files.get_default_run_category()]
+        self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
+        self.average_room_times = self.sm.get_average_room_times(self.selected_category)
+
+        self.root = self._initialize_ttk_root()
+
+        # Thread-safe queue for communication
+        self.queue = Queue()
+        self.stop_thread = threading.Event()
+        self.thread = None
+
+        # Selection / row-mapping state
+        self.visible_row_to_actual_row = []
+        self.actual_row_to_visible_row = {}
+        self.current_selected_actual_row = None
+
+        # Display-order mapping for the currently selected room's listbox entries.
+        # Keep this separate from the underlying chronology/index order.
+        self.current_display_log_indexes = []
+
+        # Styles
+        self.ttk_style = self._initialize_style()
+
+        # Main content grid
+        self.main_frame = MainFrame(self.root,
+                                    self.selected_category.run_category,
+                                    self.sm.run_categories.values(),
+                                    self.refresh_tables,
+                                    self.change_category,
+                                    self.delete_entry)
+        self.refresh_tables()
+
+        self.utility_frame = UtilityFrame(self.root,
+                                          self.sm.sm_files.channel_name,
+                                          self.sm.sm_files.api_token,
+                                          self.on_button_click_connect)
+
+        self.status_frame = StatusFrame(self.root)
+
+        self._bind_sheet_selection_events()
+
         if self.visible_row_to_actual_row:
             self.root.after(50, lambda: self.select_room_by_actual_index(self.visible_row_to_actual_row[0]))
 
         self.root.mainloop()
+
+    # Widget initialization
+    def _initialize_style(self):
+        ttk_style = ttk.Style()
+        ttk_style.configure('Red.TLabel', foreground='red')
+        ttk_style.configure('Orange.TLabel', foreground='orange')
+        ttk_style.configure('Green.TLabel', foreground='green')
+        ttk_style.configure('StatusTitle.TLabel', font=('TkDefaultFont', 10, 'bold'), foreground='black')
+        ttk_style.configure("StatusValue.TLabel", font=('TkDefaultFont', 14, 'bold'))
+        ttk_style.configure("PanelHeader.TLabel", font=('TkDefaultFont', 10, 'bold'))
+        ttk_style.configure("PersonalBest.TLabel", foreground='green', font=('TkDefaultFont', 10, 'bold'))
+        return ttk_style
+
+    def _initialize_ttk_root(self):
+        root = tkinter.Tk()
+        root.title("Room Time Tracker")
+        root.geometry(self.sm.sm_files.window_size)
+        root.minsize(int(self.sm.sm_files.min_horizontal_size), int(self.sm.sm_files.min_vertical_size))
+
+        # Main window grid config
+        root.rowconfigure(0, weight=0)  # top status banner
+        root.rowconfigure(1, weight=1)  # main content
+        root.rowconfigure(2, weight=0)  # bottom utility bar
+        root.columnconfigure(0, weight=1)
+
+        return root
+
+    def _initialize_detail_frame(self):
+        pass
 
     def _bind_sheet_selection_events(self):
         for event_name in (
@@ -245,31 +312,16 @@ class RoomTimeTrackerGUI:
             "<KeyRelease-Right>",
             "<<TreeviewSelect>>",
         ):
-            try:
-                self.sheet.bind(event_name, self.on_sheet_selection_event)
-            except Exception:
-                pass
-
-        try:
-            self.sheet.extra_bindings("cell_select", self.on_sheet_selection_event)
-        except Exception:
-            pass
-
-        try:
-            self.sheet.extra_bindings("row_select", self.on_sheet_selection_event)
-        except Exception:
-            pass
-
-        try:
-            self.sheet.extra_bindings("select", self.on_sheet_selection_event)
-        except Exception:
-            pass
+            self.main_frame.sheet.bind(event_name, self.on_sheet_selection_event)
+            self.main_frame.sheet.extra_bindings("cell_select", self.on_sheet_selection_event)
+            self.main_frame.sheet.extra_bindings("row_select", self.on_sheet_selection_event)
+            self.main_frame.sheet.extra_bindings("select", self.on_sheet_selection_event)
 
     def on_sheet_selection_event(self, event=None):
-        self.root.after(1, self.sync_right_panel_from_sheet_selection)
+        self.sync_right_panel_from_sheet_selection()
 
     def sync_right_panel_from_sheet_selection(self):
-        visible_row = self.get_selected_sheet_visible_row()
+        visible_row = self.main_frame.get_selected_sheet_visible_row()
         if visible_row is None:
             return
 
@@ -279,48 +331,6 @@ class RoomTimeTrackerGUI:
 
         self.populate_room_log_list(actual_row)
 
-    def get_selected_sheet_visible_row(self):
-        getter_names = [
-            "get_currently_selected",
-            "currently_selected",
-            "get_selected_cells",
-            "get_selected_rows",
-        ]
-
-        for name in getter_names:
-            if hasattr(self.sheet, name):
-                try:
-                    value = getattr(self.sheet, name)()
-
-                    if name == "get_selected_rows" and value:
-                        if isinstance(value, (list, tuple)):
-                            first = value[0]
-                            if isinstance(first, int):
-                                return first
-
-                    if isinstance(value, tuple):
-                        if len(value) >= 1 and isinstance(value[0], int):
-                            return value[0]
-
-                    if hasattr(value, "row"):
-                        row = getattr(value, "row")
-                        if isinstance(row, int):
-                            return row
-
-                    if isinstance(value, dict):
-                        row = value.get("row")
-                        if isinstance(row, int):
-                            return row
-
-                    if isinstance(value, (list, tuple)) and value:
-                        first = value[0]
-                        if isinstance(first, tuple) and len(first) >= 1 and isinstance(first[0], int):
-                            return first[0]
-                except Exception:
-                    pass
-
-        return None
-
     def visible_row_to_actual_row_from_visible(self, visible_row):
         if visible_row is None:
             return None
@@ -329,7 +339,7 @@ class RoomTimeTrackerGUI:
         return self.visible_row_to_actual_row[visible_row]
 
     def change_category(self):
-        radio_button_selection = self.run_category_radio_button_selection.get()
+        radio_button_selection = self.main_frame.run_category_radio_button_selection.get()
         self.selected_category = self.sm.run_categories[radio_button_selection]
         self.sm.rebuild_run_category_index(self.selected_category)
 
@@ -346,23 +356,23 @@ class RoomTimeTrackerGUI:
             self.sm.sm_files.config.write(file_handler)
 
     def on_button_click_connect(self):
-        '''
+        """
         Starts the websocket connection thread which is triggered from the connect button
         :return: None
-        '''
-        if self.api_token_entry.get() and self.channel_entry.get():
+        """
+        if self.utility_frame.api_token_entry.get() and self.utility_frame.channel_entry.get():
             if self.thread is None or not self.thread.is_alive():
                 self.stop_thread.clear()
                 self.thread = threading.Thread(target=self.websocket_thread_function, daemon=True)
                 self.thread.start()
-                self.status_label.config(text="Status: Connecting...", style='Orange.TLabel')
-                self.connect_button.config(state=tkinter.DISABLED)
+                self.utility_frame.status_label.config(text="Status: Connecting...", style='Orange.TLabel')
+                self.utility_frame.connect_button.config(state=tkinter.DISABLED)
                 # Start checking the queue
                 self.root.after(100, self.listen_for_result)
             else:
                 self.stop_thread.set()
-                self.status_label.config(text="Status: Disconnecting...", style='Red.TLabel')
-                self.connect_button.config(state=tkinter.NORMAL)
+                self.utility_frame.status_label.config(text="Status: Disconnecting...", style='Red.TLabel')
+                self.utility_frame.connect_button.config(state=tkinter.NORMAL)
 
     def listen_for_result(self):
         try:
@@ -373,28 +383,27 @@ class RoomTimeTrackerGUI:
                 print(f'Message type {type(msg)}')
                 print(msg)
                 if msg == 'Authenticated.  Waiting for Funtoon to detect the next room transition.':
-                    self.status_label.config(text=msg, style='Orange.TLabel')
-                elif msg == f'Connected to funtoon as {self.channel_entry.get()}':
-                    self.status_label.config(text=msg, style='Green.TLabel')
-                    self.connect_button.config(state=tkinter.DISABLED)
+                    self.utility_frame.status_label.config(text=msg, style='Orange.TLabel')
+                elif msg == f'Connected to funtoon as {self.utility_frame.channel_entry.get()}':
+                    self.utility_frame.status_label.config(text=msg, style='Green.TLabel')
+                    self.utility_frame.connect_button.config(state=tkinter.DISABLED)
                     # return  # Stop checking
                 elif msg == 'invalid auth':
-                    self.status_label.config(text=f"invalid auth", style='Red.TLabel')
-                    self.connect_button.config(state=tkinter.NORMAL)
+                    self.utility_frame.status_label.config(text=f"invalid auth", style='Red.TLabel')
+                    self.utility_frame.connect_button.config(state=tkinter.NORMAL)
                     # return  # Stop checking
                 elif msg == 'Disconnected':
-                    self.status_label.config(text=f"Disconnected", style='Red.TLabel')
-                    self.connect_button.config(state=tkinter.NORMAL)
+                    self.utility_frame.status_label.config(text=f"Disconnected", style='Red.TLabel')
+                    self.utility_frame.connect_button.config(state=tkinter.NORMAL)
                     # return  # Stop checking
 
                 elif msg == 'test':
-                        print('queue test')
+                    print('queue test')
 
                 if isinstance(msg, dict):
                     print(f"Message Event {msg['event']}")
                     if msg['event'] == 'smRoomTime':
-                        room_log = {'timestamp': time.time(),
-                                     'data': msg['data']}
+                        room_log = {'timestamp': time.time(), 'data': msg['data']}
                         self.append_room_time(room_log)
                 # Schedule this function to run again after a delay (e.g., 100ms)
                 self.root.after(100, self.listen_for_result)
@@ -404,13 +413,10 @@ class RoomTimeTrackerGUI:
         self.root.after(100, self.listen_for_result)
 
     def _get_table_sheet(self):
-        '''
+        """
 
-        :param room_time_names:
-        :param fastest_room_times:
-        :param average_room_times:
         :return:
-        '''
+        """
         table_sheet = []
         self.visible_row_to_actual_row = []
         self.actual_row_to_visible_row = {}
@@ -423,8 +429,9 @@ class RoomTimeTrackerGUI:
             fastest = self.fastest_room_times[index]
             average = self.average_room_times[index]
 
-            if self.hide_empty_rows_var.get() and not fastest and not average:
-                continue
+            if self.main_frame:
+                if self.main_frame.hide_empty_rows_var.get() and not fastest and not average:
+                    continue
 
             table_sheet.append([room, fastest, average])
             self.visible_row_to_actual_row.append(index)
@@ -434,7 +441,7 @@ class RoomTimeTrackerGUI:
         return table_sheet
 
     def populate_room_log_list(self, actual_row_index):
-        self.listbox.delete(0, tkinter.END)
+        self.main_frame.listbox.delete(0, tkinter.END)
         self.current_selected_actual_row = actual_row_index
         self.current_display_log_indexes = []
 
@@ -444,21 +451,21 @@ class RoomTimeTrackerGUI:
         print(f"{self.selected_category.run_category} actual index: {actual_row_index} from sheet selection")
 
         if actual_row_index < 0 or actual_row_index >= len(room_times):
-            self.room_name_label.config(text="None")
-            self.room_time_label.config(text="Room Time: None")
-            self.room_average_label.config(text="Average: None")
-            self.room_pb_label.config(text="PB: None")
+            self.status_frame.room_name_label.config(text="None")
+            self.status_frame.room_time_label.config(text="Room Time: None")
+            self.status_frame.room_average_label.config(text="Average: None")
+            self.status_frame.room_pb_label.config(text="PB: None", style='StatusTitle.TLabel')
             return
 
         room_name = self.selected_category.room_time_names[actual_row_index]
-        self.room_name_label.config(text=room_name)
+        self.status_frame.room_name_label.config(text=room_name)
         average_time = self.average_room_times[actual_row_index]
         pb_time = self.fastest_room_times[actual_row_index]
-        self.room_average_label.config(text=f"Average: {average_time if average_time else 'None'}")
-        self.room_pb_label.config(text=f"PB: {pb_time if pb_time else 'None'}")
+        self.status_frame.room_average_label.config(text=f"Average: {average_time if average_time else 'None'}")
+        self.status_frame.room_pb_label.config(text=f"PB: {pb_time if pb_time else 'None'}", style='StatusTitle.TLabel')
 
         if not room_times[actual_row_index]:
-            self.room_time_label.config(text="Room Time: None")
+            self.status_frame.room_time_label.config(text="Room Time: None")
             return
 
         print(room_times[actual_row_index])
@@ -475,7 +482,7 @@ class RoomTimeTrackerGUI:
         self.current_display_log_indexes = [str(pair[1]) for pair in display_pairs]
 
         for room_time in display_room_times:
-            self.listbox.insert(
+            self.main_frame.listbox.insert(
                 tkinter.END,
                 read_funtoon_data.convert_framecount_to_seconds(room_time)
             )
@@ -484,68 +491,55 @@ class RoomTimeTrackerGUI:
         latest_time = read_funtoon_data.convert_framecount_to_seconds(
             self.sm.room_logs[latest_log_index]["data"]["practiceFrames"]
         )
-        self.room_time_label.config(text=f"Room Time: {latest_time}")
+        self.status_frame.room_time_label.config(text=f"Room Time: {latest_time}")
 
     def select_room_by_actual_index(self, actual_row_index, refresh_right_panel=True):
         if actual_row_index not in self.actual_row_to_visible_row:
             if refresh_right_panel:
                 self.current_selected_actual_row = None
                 self.current_display_log_indexes = []
-                self.listbox.delete(0, tkinter.END)
-                self.room_name_label.config(text="None")
-                self.room_time_label.config(text="Room Time: None")
-                self.room_average_label.config(text="Average: None")
-                self.room_pb_label.config(text="PB: None")
+                self.main_frame.listbox.delete(0, tkinter.END)
+                self.status_frame.room_name_label.config(text="None")
+                self.status_frame.room_time_label.config(text="Room Time: None")
+                self.status_frame.room_average_label.config(text="Average: None")
+                self.status_frame.room_pb_label.config(text="PB: None", style='StatusTitle.TLabel')
             return
 
         visible_row = self.actual_row_to_visible_row[actual_row_index]
 
-        try:
-            if hasattr(self.sheet, "set_currently_selected"):
-                self.sheet.set_currently_selected(visible_row, 0)
-        except Exception:
-            pass
+        if hasattr(self.main_frame.sheet, "set_currently_selected"):
+            self.main_frame.sheet.set_currently_selected(visible_row, 0)
 
-        try:
-            if hasattr(self.sheet, "select_row"):
-                self.sheet.select_row(visible_row)
-        except Exception:
-            pass
+        if hasattr(self.main_frame.sheet, "select_row"):
+            self.main_frame.sheet.select_row(visible_row)
 
-        try:
-            if hasattr(self.sheet, "see"):
-                self.sheet.see(visible_row, 0)
-        except Exception:
-            pass
+        if hasattr(self.main_frame.sheet, "see"):
+            self.main_frame.sheet.see(visible_row, 0)
 
-        try:
-            if hasattr(self.sheet, "redraw"):
-                self.sheet.redraw()
-        except Exception:
-            pass
+        if hasattr(self.main_frame.sheet, "redraw"):
+            self.main_frame.sheet.redraw()
 
         if refresh_right_panel:
             self.populate_room_log_list(actual_row_index)
 
     def delete_entry(self):
-        '''
+        """
         Deletes the room time entry.  Index needs to be rebuilt after every entry is deleted
         :return: None
-        '''
-        selected_indices = self.listbox.curselection()
+        """
+        selected_indices = self.main_frame.listbox.curselection()
         if not selected_indices:
             return
 
         if self.current_selected_actual_row is None:
             return
 
-
         # if selected_indices:
         # Get the first selected index as it always returns a tuple
         index = selected_indices[0]
         # Get the actual value using the index
-        selected_item = self.listbox.get(index)
-        log_index = self.get_log_index_from_selections(self.listbox)
+        selected_item = self.main_frame.listbox.get(index)
+        log_index = self.get_log_index_from_selections(self.main_frame.listbox)
 
         room_name = self.selected_category.room_time_names[self.current_selected_actual_row]
 
@@ -557,7 +551,7 @@ class RoomTimeTrackerGUI:
         print(room_time_from_log)
 
         previous_log_length = len(self.sm.room_logs)
-        previous_index_num_of_entires = sum(len(row) for row in self.selected_category.run_category_indexes)
+        previous_index_num_of_entries = sum(len(row) for row in self.selected_category.run_category_indexes)
         print(f'Previous log length {previous_log_length}')
         if room_time_from_log != selected_item:
             raise ValueError(f'Room time {selected_item} does not match with time in logs {room_time_from_log}')
@@ -574,12 +568,11 @@ class RoomTimeTrackerGUI:
                 log_handler.write(json.dumps(room) + '\n')
         self.sm.rebuild_run_category_index(self.selected_category)
 
-        new_index_num_of_entires = sum(len(row) for row in self.selected_category.run_category_indexes)
-        print(f'Old number of index entires: {previous_index_num_of_entires}')
-        print(f'New number of index entires: {new_index_num_of_entires}')
+        new_index_num_of_entries = sum(len(row) for row in self.selected_category.run_category_indexes)
+        print(f'Old number of index entries: {previous_index_num_of_entries}')
+        print(f'New number of index entries: {new_index_num_of_entries}')
 
-        #Refreshes all indexes and logs
-        selected_room_to_restore = self.current_selected_actual_row
+        # Refreshes all indexes and logs
         self.refresh_tables()
 
     def get_log_index_from_selections(self, listbox):
@@ -587,38 +580,37 @@ class RoomTimeTrackerGUI:
         return int(self.current_display_log_indexes[column_index])
 
     def refresh_tables(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         previous_selected_actual_row = self.current_selected_actual_row
         # refresh best and average times table
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-        self.table_sheet = self._get_table_sheet()
-        self.sheet.set_sheet_data(self.table_sheet)
-        self.sheet.set_all_cell_sizes_to_text()
+        self.main_frame.table_sheet = self._get_table_sheet()
+        self.main_frame.sheet.set_sheet_data(self.main_frame.table_sheet)
+        self.main_frame.sheet.set_all_cell_sizes_to_text()
 
         if previous_selected_actual_row is not None and previous_selected_actual_row in self.actual_row_to_visible_row:
-            self.root.after(1, lambda: self.select_room_by_actual_index(previous_selected_actual_row))
+            self.root.after(1, self.select_room_by_actual_index, previous_selected_actual_row)
         elif self.visible_row_to_actual_row:
-            self.root.after(1, lambda: self.select_room_by_actual_index(self.visible_row_to_actual_row[0]))
+            self.root.after(1, self.select_room_by_actual_index, self.visible_row_to_actual_row[0])
         else:
             self.current_selected_actual_row = None
             self.current_display_log_indexes = []
-            self.listbox.delete(0, tkinter.END)
-            self.room_name_label.config(text="None")
-            self.room_time_label.config(text="Room Time: None")
-            self.room_average_label.config(text="Average: None")
-            self.room_pb_label.config(text="PB: None")
-
+            self.main_frame.listbox.delete(0, tkinter.END)
+            self.status_frame.room_name_label.config(text="None")
+            self.status_frame.room_time_label.config(text="Room Time: None")
+            self.status_frame.room_average_label.config(text="Average: None")
+            self.status_frame.room_pb_label.config(text="PB: None", style='StatusTitle.TLabel')
 
     def append_room_time(self, room_log):
-        '''
+        """
 
         :param room_log:
         :return:
-        '''
+        """
         print(json.dumps(room_log, indent=4))
         print(f'Writing to Log {self.sm.sm_files.room_log_file}')
         with open(self.sm.sm_files.room_log_file, 'a') as log_handler:
@@ -627,22 +619,23 @@ class RoomTimeTrackerGUI:
         # append index and update table
         room_logic_index = self.sm.get_run_category_room_logic_index(room_log, self.selected_category)
         if room_logic_index is None and room_logic_index != 0:
-            # self.selection_label.config(text=f'Unsupported room transition')
-            self.room_name_label.config(text=f'Unsupported room transition')
-            self.room_time_label.config(text="Room Time: None")
-            self.room_average_label.config(text="Average: None")
-            self.room_pb_label.config(text="PB: None")
+            self.status_frame.room_name_label.config(text=f'Unsupported room transition')
+            self.status_frame.room_time_label.config(text="Room Time: None")
+            self.status_frame.room_average_label.config(text="Average: None")
+            self.status_frame.room_pb_label.config(text="PB: None", style='StatusTitle.TLabel')
             return
 
-        #check if room time is a PB
+        # check if room time is a PB
         room_time_frames = room_log["data"]["practiceFrames"]
         room_time = read_funtoon_data.convert_framecount_to_seconds(room_time_frames)
 
-        # Initlizes the PB to false.  Set it to true if there's a PB or not a first time room entry
+        # Initializes the PB to false.  Set it to true if there's a PB or not a first time room entry
         room_time_pb = False
         if self.fastest_room_times[room_logic_index]:
-            if room_time_frames < read_funtoon_data.convert_room_time_to_framecount(
-                    self.fastest_room_times[room_logic_index]):
+            fastest_room_time_frames = read_funtoon_data.convert_room_time_to_framecount(
+                self.fastest_room_times[room_logic_index])
+            print(f'{room_time_frames} < {fastest_room_time_frames}')
+            if room_time_frames < fastest_room_time_frames:
                 room_time_pb = True
 
         # self.sm.append_index_log(room_dict, self.selected_category)
@@ -652,7 +645,7 @@ class RoomTimeTrackerGUI:
         # Update category index list and file
         print(f'Writing to {self.selected_category.get_run_category_index_filename()}')
 
-        #If log entry for that room is empty, initialize a list with that value
+        # If log entry for that room is empty, initialize a list with that value
         if not self.selected_category.run_category_indexes[room_logic_index]:
             self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
         else:
@@ -668,40 +661,38 @@ class RoomTimeTrackerGUI:
         # refresh best and average times table
         self.fastest_room_times = self.sm.get_fastest_room_times(self.selected_category)
         self.average_room_times = self.sm.get_average_room_times(self.selected_category)
-        self.table_sheet = self._get_table_sheet()
-        self.sheet.set_sheet_data(self.table_sheet)
-        self.sheet.set_all_cell_sizes_to_text()
+        self.main_frame.table_sheet = self._get_table_sheet()
+        self.main_frame.sheet.set_sheet_data(self.main_frame.table_sheet)
+        self.main_frame.sheet.set_all_cell_sizes_to_text()
         # Change room selection and label
-
-        self.root.after(1, lambda: self.select_room_by_actual_index(room_logic_index))
+        self.select_room_by_actual_index(room_logic_index)
 
         room_name = self.selected_category.room_time_names[room_logic_index]
-        self.room_name_label.config(text=room_name)
-        self.room_time_label.config(text=f"Room Time: {room_time}")
+        self.status_frame.room_name_label.config(text=room_name)
+        self.status_frame.room_time_label.config(text=f"Room Time: {room_time}")
         average_text = self.average_room_times[room_logic_index]
-        self.room_average_label.config(text=f"Average: {average_text if average_text else 'None'}")
+        self.status_frame.room_average_label.config(text=f"Average: {average_text if average_text else 'None'}")
 
         pb_text = self.fastest_room_times[room_logic_index]
-        # room_time_message = f'{self.room_dropdown_menu.get()}: {room_time}'
+        print(f'PB: {room_time_pb}')
         if room_time_pb:
-            self.room_pb_label.config(text=f"PB: {pb_text} *** NEW PB ***")
+            print(f'PB: {pb_text} *** NEW PB ***')
+            self.status_frame.room_pb_label.config(text=f'PB: {pb_text} *** NEW PB ***', style='PersonalBest.TLabel')
         else:
-            self.room_pb_label.config(text=f"PB: {pb_text if pb_text else 'None'}")
+            self.status_frame.room_pb_label.config(text=f'PB: {pb_text if pb_text else "None"}', style='StatusTitle.TLabel')
 
     def websocket_thread_function(self):
-        '''
-        Main method to collect the funtoon data
-        :param channel:
-        :param token:
+        """
+
         :return:
-        '''
+        """
         try:
-            channel = self.channel_entry.get()
-            token = self.api_token_entry.get()
+            channel = self.utility_frame.channel_entry.get()
+            token = self.utility_frame.api_token_entry.get()
             with connect(f'wss://funtoon.party/tracking?channel={channel}&token={token}') as ws:
                 self.queue.put('Authenticated.  Waiting for Funtoon to detect the next room transition.')
                 print('Connecting to funtoon')
-                #Update config files
+                # Update config files
                 if channel != self.sm.sm_files.channel_name or \
                         token != self.sm.sm_files.api_token:
                     print(f'Updating config file {self.sm.sm_files.config_file}')
@@ -731,5 +722,3 @@ class RoomTimeTrackerGUI:
             traceback.print_exc()
         finally:
             self.queue.put("Disconnected")
-
-
