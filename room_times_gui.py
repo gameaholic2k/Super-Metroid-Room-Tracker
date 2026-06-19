@@ -75,7 +75,7 @@ class MainFrame:
                 command=change_category_func
             ).grid(row=row, column=0, sticky="w")
 
-            # Right: detail panel
+        # Right: detail panel
         self.detail_header = ttk.Label(
             self.detail_frame,
             text="Selected Room History",
@@ -647,7 +647,7 @@ class RoomTimeTrackerGUI:
 
         # If log entry for that room is empty, initialize a list with that value
         if not self.selected_category.run_category_indexes[room_logic_index]:
-            self.selected_category.run_category_indexes[room_logic_index] = [str(last_log_index)]
+            self.selected_category.run_category_indexes[room_logic_index] = [last_log_index]
         else:
             print(f'Length of index {len(self.selected_category.run_category_indexes[room_logic_index])}')
             print(type(self.selected_category.run_category_indexes[room_logic_index][0]))
@@ -677,9 +677,10 @@ class RoomTimeTrackerGUI:
         print(f'PB: {room_time_pb}')
         if room_time_pb:
             print(f'PB: {pb_text} *** NEW PB ***')
-            self.status_frame.room_pb_label.config(text=f'PB: {pb_text} *** NEW PB ***', style='PersonalBest.TLabel')
+            self.status_frame.room_pb_label.config(text=f'PB: {pb_text} \n *** NEW PB ***', style='PersonalBest.TLabel')
         else:
-            self.status_frame.room_pb_label.config(text=f'PB: {pb_text if pb_text else "None"}', style='StatusTitle.TLabel')
+            self.status_frame.room_pb_label.config(text=f'PB: {pb_text if pb_text else "None"}',
+                                                   style='StatusTitle.TLabel')
 
     def websocket_thread_function(self):
         """

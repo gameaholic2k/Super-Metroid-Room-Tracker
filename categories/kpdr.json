@@ -1450,13 +1450,18 @@
 			"exit_loadout": "kpdr_wrecked_ship_super_missiles"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Ws Attic (Not Spark)",
                 "room": "Attic",
                 "nextRoom": "West Ocean"
             },
-            "data": null
+            "data": {
+                "roomID": 51794,
+                "nextRoomID": 37886,
+				"shinesparked": false
+            },
+			"entry_loadout": "kpdr_wrecked_ship_super_missiles",
+			"exit_loadout": "kpdr_wrecked_ship_super_missiles"
         },
         {
             "names": {
@@ -1466,7 +1471,8 @@
             },
             "data": {
                 "roomID": 51794,
-                "nextRoomID": 37886
+                "nextRoomID": 37886,
+				"shinesparked": true
             },
 			"entry_loadout": "kpdr_wrecked_ship_super_missiles",
 			"exit_loadout": "kpdr_wrecked_ship_super_missiles"
@@ -1717,19 +1723,25 @@
             },
             "data": {
                 "roomID": 53433,
-                "nextRoomID": 53667
+                "nextRoomID": 53667,
+				"shinesparked": true
             },
 			"entry_loadout": "kpdr_gravity_suit",
 			"exit_loadout": "kpdr_gravity_suit"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Mt. Everest (No Spark)",
                 "room": "Mt. Everest",
                 "nextRoom": "Crab Shaft"
             },
-            "data": null
+            "data": {
+                "roomID": 53433,
+                "nextRoomID": 53667,
+				"shinesparked": false
+            },
+			"entry_loadout": "kpdr_gravity_suit",
+			"exit_loadout": "kpdr_gravity_suit"
         },
         {
             "names": {
@@ -1817,19 +1829,27 @@
             },
             "data": {
                 "roomID": 55082,
-                "nextRoomID": 55183
+                "nextRoomID": 55183,
+				"shinesparked": true
             },
 			"entry_loadout": "kpdr_botwoon_etank",
 			"exit_loadout": "kpdr_botwoon_etank"
+			
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Colloseum (No Halfie)",
                 "room": "Colosseum",
                 "nextRoom": "The Precious Room"
             },
-            "data": null
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55183,
+				"shinesparked": false
+            },
+			"entry_loadout": "kpdr_botwoon_etank",
+			"exit_loadout": "kpdr_botwoon_etank"
+			
         },
         {
             "names": {
@@ -1929,13 +1949,19 @@
 			"exit_loadout": "kpdr_draygon"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Colosseum (No Halfie)",
                 "room": "Colosseum",
                 "nextRoom": "Halfie Climb"
             },
-            "data": null
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55571,
+				"shinesparked": false
+            },
+			"entry_loadout": "kpdr_space_jump",
+			"exit_loadout": "kpdr_space_jump"
+			
         },
 		{
             "names": {
@@ -1996,7 +2022,8 @@
             },
             "data": {
                 "roomID": 55082,
-                "nextRoomID": 55571
+                "nextRoomID": 55571,
+				"shinesparked": true
             },
 			"entry_loadout": "kpdr_space_jump",
 			"exit_loadout": "kpdr_space_jump"

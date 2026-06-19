@@ -3,28 +3,28 @@ import json
 import copy
 import csv
 import statistics
-from datetime import datetime
 from pathlib import Path
 import file_loader
 
-class RunCategory():
+
+class RunCategory:
     def __init__(self, run_category):
         self.config = file_loader.FileManager()
         self.run_category = run_category
         self.run_category_room_paths = self.get_run_category_room_paths()
         self.room_time_names = self.get_room_time_names()
-        # Must be initialized by the SuperMetroidRooms class as it contains the compare room and log methods to build the index
+        # Must be initialized by the SuperMetroidRooms class as it contains the compare room and log methods to
+        # build the index
 
         self.run_category_indexes = None
         self.fastest_room_times = None
         self.average_room_times = None
 
     def get_run_category_filename(self) -> str:
-        '''
+        """
         Gets the filename from the run category
         :return:
-        '''
-        file_paths = []
+        """
         json_files = glob.glob(f'{self.config.run_category_directory}/*.json')
         for file in json_files:
             try:
@@ -35,20 +35,21 @@ class RunCategory():
             except Exception as e:
                 print(f'Exception encountered from reading file: {file}')
                 raise e
-        raise RuntimeError(f'No category "{self.run_category}" found in any of the files under "{self.config.run_category_directory}"')
-    
+        raise RuntimeError(f'No category "{self.run_category}" found in any of the files under '
+                           f'"{self.config.run_category_directory}"')
+
     def get_run_category_index_filename(self):
-        '''
+        """
         Gets the file name of the run category index csv file
         :return: Index filename
-        '''
+        """
         return f'{self.run_category}_index.csv'
-    
+
     def get_run_category_room_paths(self) -> dict:
-        '''
+        """
 
         :return:
-        '''
+        """
         with open(self.get_run_category_filename(), 'r') as f:
             run_category_room_paths = json.load(f)['roomDefinitionList']
 
@@ -68,8 +69,10 @@ class RunCategory():
                 exit_collected_items = pre_defined_exit['collectedItems']
 
                 # Moving collected items to its own definition as we need to process that info separately
-                entry_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_entry.items() if key != 'collectedItems'}
-                exit_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_exit.items() if key != 'collectedItems'}
+                entry_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_entry.items() if
+                                    key != 'collectedItems'}
+                exit_predefined = {key: copy.deepcopy(value) for key, value in pre_defined_exit.items() if
+                                   key != 'collectedItems'}
 
                 if 'entryState' in room_path['data']:
                     merged_entry_state = entry_predefined | room_path['data']['entryState']
@@ -89,43 +92,43 @@ class RunCategory():
         return run_category_room_paths
 
     def get_room_time_names(self) -> list:
-        '''
+        """
 
         :return:
-        '''
+        """
         rooms = []
         for room in self.run_category_room_paths:
             rooms.append(room['names']['individual_room_time_name'])
         return rooms
 
-class SuperMetroidRooms():
+
+class SuperMetroidRooms:
     def __init__(self):
         self.sm_files = file_loader.FileManager()
         self.run_categories = self._get_run_categories()
         self.room_logs = self.sm_files.get_room_logs()
         self.sm_address_data = self.sm_files.get_address_definitions()
         self._initialize_run_category_indexes()
-    
+
     # Private methods
     def _get_run_categories(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         run_categories = {}
         for category in self.sm_files.get_run_categories():
             run_categories[category] = RunCategory(category)
         return run_categories
-    
 
     # Public methods
     def is_subset_dict(self, subset_dict, superset_dict):
-        '''
+        """
         Checks if the subsect dict is part of a superset dict, used to compare a room path logic to a room log
         :param subset_dict: subsect dic (typically theroom logic definition)
         :param superset_dict: supersec dict (typically the room log)
         :return:
-        '''
+        """
         def flatten_dict(d, parent_key='', sep='_'):
             items = []
             for k, v in d.items():
@@ -136,7 +139,7 @@ class SuperMetroidRooms():
                     items.append((new_key, v))
             return dict(items)
 
-        #Flattens the dictionary to compare all of the nested values
+        # Flattens the dictionary to compare all the nested values
         flattened_subset_dict = flatten_dict(subset_dict)
         flattened_uperset_dict = flatten_dict(superset_dict)
 
@@ -144,32 +147,37 @@ class SuperMetroidRooms():
             if not item in flattened_uperset_dict.items():
                 return False
         return True
-    
+
     def compare_room_data(self, room_path_logic, room_log) -> bool:
         if "not_yet_implemented" in room_path_logic:
             return False
-        
+
+        # Add shinesparked false flag if it's not in the log
+        if room_path_logic['data'].get('shinesparked') is False:
+            if 'shinesparked' not in room_log['data']:
+                room_log['data']['shinesparked'] = False
+
         data_match = self.is_subset_dict(room_path_logic['data'], room_log['data'])
 
-        #Matching enemies killed:
+        # Matching enemies killed:
         items_match = self.compare_collected_items(room_path_logic, room_log)
         if "lessThanEnemiesKilled" in room_path_logic:
             if room_log['data']['enemiesKilled'] >= room_path_logic['lessThanEnemiesKilled']:
                 return False
-        
+
         if "greaterThanorEqualEnemiesKilled" in room_path_logic:
             if room_log['data']['enemiesKilled'] < room_path_logic['greaterThanorEqualEnemiesKilled']:
                 return False
 
         return all(x == True for x in [data_match, items_match])
-    
+
     def compare_collected_items(self, room_definition, room_log):
-        '''
+        """
         Performs a bit mask check on collected items to verify if the item was collected
         :param room_definition:
         :param room_log:
         :return:
-        '''
+        """
         def compare_item_lists(definition_collected_items, room_log_item_state):
 
             if not definition_collected_items:
@@ -177,7 +185,7 @@ class SuperMetroidRooms():
                     return True
                 else:
                     return False
-                
+
             else:
                 item_data = None
                 base_index = int('0xD870', 16)
@@ -205,13 +213,13 @@ class SuperMetroidRooms():
         entry_match = compare_item_lists(entry_collected_items, room_log_entry_state_items)
         exit_match = compare_item_lists(exit_collected_items, room_log_exit_state_items)
         return all(x is True for x in [entry_match, exit_match])
-    
+
     def get_times_from_room_path(self, room_path_logic):
-        '''
+        """
 
         :param room_path_logic:
         :return:
-        '''
+        """
         times = []
         for log in self.room_logs:
             if not "not_yet_implemented" in room_path_logic:
@@ -219,22 +227,22 @@ class SuperMetroidRooms():
                     # times.append(log['data']['frameCount'])
                     times.append(log['data']['practiceFrames'])
         return times
-    
+
     def get_room_name_with_address(self, hex_address):
-        '''
+        """
 
         :param hex_address:
         :return:
-        '''
+        """
         for room in self.sm_address_data:
             if hex_address.upper() == room["value"].upper():
                 return room["name"]
-            
+
     def _initialize_run_category_indexes(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         for category in self.run_categories.values():
             index_filename = category.get_run_category_index_filename()
             if not Path(index_filename).exists():
@@ -250,11 +258,6 @@ class SuperMetroidRooms():
                 category.run_category_indexes = room_log_indexes
 
     def get_log_indexes_from_room_definition(self, room_path_logic):
-        '''
-
-        :param room_path_logic:
-        :return:
-        '''
         room_log_indexes = []
         for index, log in enumerate(self.room_logs):
             # print(room_path_logic)
@@ -264,11 +267,11 @@ class SuperMetroidRooms():
         return room_log_indexes
 
     def rebuild_run_category_index(self, run_category):
-        '''
+        """
 
         :param run_category:
         :return:
-        '''
+        """
         room_log_indexes = []
         counter = 0
         num_of_rooms = len(run_category.run_category_room_paths)
@@ -288,11 +291,11 @@ class SuperMetroidRooms():
         run_category.run_category_indexes = room_log_indexes
 
     def get_room_times_from_index(self, run_category):
-        '''
+        """
 
         :param run_category:
         :return:
-        '''
+        """
         room_times = []
         for log_index_list in run_category.run_category_indexes:
             if not any(item == [] for item in log_index_list):
@@ -300,13 +303,13 @@ class SuperMetroidRooms():
             else:
                 room_times.append([])
         return room_times
-    
+
     def get_fastest_room_times(self, run_category):
-        '''
+        """
 
         :param run_category:
         :return:
-        '''
+        """
         room_times_table = []
         frame_data_table = self.get_room_times_from_index(run_category)
         for room_times in frame_data_table:
@@ -319,11 +322,11 @@ class SuperMetroidRooms():
         return room_times_table
 
     def get_average_room_times(self, run_category):
-        '''
+        """
 
         :param run_category:
         :return:
-        '''
+        """
         room_times_table = []
         frame_data_table = self.get_room_times_from_index(run_category)
         for room_times in frame_data_table:
@@ -336,12 +339,12 @@ class SuperMetroidRooms():
         return room_times_table
 
     def get_run_category_room_logic_index(self, room_log, run_category):
-        '''
+        """
 
         :param room_log:
         :param run_category:
         :return:
-        '''
+        """
 
         for index, room_path_logic in enumerate(run_category.run_category_room_paths):
             if self.compare_room_data(room_path_logic, room_log) is True:
@@ -349,11 +352,11 @@ class SuperMetroidRooms():
 
 
 def convert_framecount_to_seconds(framecount):
-    '''
+    """
 
     :param framecount:
     :return:
-    '''
+    """
     if not framecount:
         return None
     seconds = int(framecount / 60)
@@ -362,14 +365,13 @@ def convert_framecount_to_seconds(framecount):
 
 
 def convert_room_time_to_framecount(room_time):
-    '''
+    """
 
-    :param framecount:
+    :param room_time:
     :return:
-    '''
+    """
     if not room_time:
         return None
     seconds, frames = map(int, room_time.split('.'))
     total_frames = seconds * 60 + frames
     return total_frames
-

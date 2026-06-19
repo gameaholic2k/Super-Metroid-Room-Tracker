@@ -3,26 +3,6 @@ import glob
 from pathlib import Path
 import configparser
 from typing import Final
-# from dataclasses import dataclass
-#
-# @dataclass
-# class DefaultConfig:
-#     room_log_file: str = 'list_of_roomtimes.jsonl'
-#     run_category_directory: str = 'categories'
-#     address_file: str = 'SuperMetroid.json'
-#     room_log_directory: str = 'logs'
-#     pre_defined_room_states_file: str = 'pre_defined_room_states.json'
-#     channel_name: str = ''
-#     api_token: str = ''
-#
-#     # GUI config entries
-#     window_size: str = '1100x760'
-#     min_horizontal_size: int = 780
-#     min_vertical_size: int = 620
-#     default_run_category: str = 'KPDR'
-
-
-
 
 
 class FileManager:
@@ -106,10 +86,10 @@ class FileManager:
         return config
 
     def get_run_category_files(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         json_files = glob.glob(f'{self.run_category_directory}/*.json')
         return json_files
 
@@ -138,13 +118,13 @@ class FileManager:
         return run_categories
     
     def get_room_logs(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         data = []
         if not Path(self.room_log_file).exists():
-            with open(self.room_log_file, 'w') as f:
+            with open(self.room_log_file, 'w'):
                 pass
         with open(self.room_log_file, 'r') as f:
             for line in f:
@@ -152,10 +132,10 @@ class FileManager:
         return data
     
     def get_address_definitions(self):
-        '''
+        """
 
         :return:
-        '''
+        """
         with open(self._address_file, 'r') as f:
             address_definitions = json.load(f)['definitions']
         return address_definitions

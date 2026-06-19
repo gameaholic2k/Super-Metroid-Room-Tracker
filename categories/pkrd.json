@@ -2087,19 +2087,25 @@
             },
             "data": {
                 "roomID": 55082,
-                "nextRoomID": 55183
+                "nextRoomID": 55183,
+				"shinesparked": true
             },
 			"entry_loadout": "prkd_botwoon_etank",
 			"exit_loadout": "prkd_botwoon_etank"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Colloseum (No Halfie)",
                 "room": "Colosseum",
                 "nextRoom": "The Precious Room"
             },
-            "data": null
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55183,
+				"shinesparked": false
+            },
+			"entry_loadout": "prkd_botwoon_etank",
+			"exit_loadout": "prkd_botwoon_etank"
         },
         {
             "names": {
@@ -2167,19 +2173,25 @@
             },
             "data": {
                 "roomID": 55082,
-                "nextRoomID": 55571
+                "nextRoomID": 55571,
+				"shinesparked": true
             },
 			"entry_loadout": "prkd_draygon",
 			"exit_loadout": "prkd_draygon"
         },
 		{
-			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Colosseum (No Halfie)",
                 "room": "Colosseum",
                 "nextRoom": "Halfie Climb"
             },
-            "data": null
+            "data": {
+                "roomID": 55082,
+                "nextRoomID": 55571,
+				"shinesparked": false
+            },
+			"entry_loadout": "prkd_draygon",
+			"exit_loadout": "prkd_draygon"
         },
 		{
             "names": {
