@@ -1176,12 +1176,12 @@
 			"not_yet_implemented": true,
             "names": {
                 "individual_room_time_name": "Maridia Tunnels (Combined)",
-                "room": "Warehouse Entrance",
+                "room": "East Tunnel",
                 "nextRoom": "Glass Tunnel, West Tunnel, Below Spazer"
             },
 			"data": {
-				"roomID": 42974,
-				"nextRoomID": [52946, 53076, 41992]
+				"roomID": 53120,
+				"nextRoomID": [52987, 53076, 41992]
 			},
 			"entry_loadout": "kpdr_wave_beam",
 			"exit_loadout": "kpdr_wave_beam"
