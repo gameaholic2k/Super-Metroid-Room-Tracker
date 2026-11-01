@@ -13,7 +13,7 @@ Installing required modules <br/>
 python -m pip install -r requirements.txt
 
 Loading the application <br/>
-Windows users - start.bat
+Windows users - start.bat <br/>
 Command line/other OS - python main.py
 
 
