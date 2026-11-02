@@ -6,9 +6,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def disable_event():
-    pass
-
 def initialize_category_popup_window(root: tk.Tk,
                                      run_category_names: list,
                                      config: configparser.ConfigParser,
@@ -31,7 +28,7 @@ def initialize_category_popup_window(root: tk.Tk,
 
 
     ok_button = tk.Button(popup, text="Confirm", command=lambda: on_click_ok_button(popup, checkbox_vars, config, config_file))
-    popup.protocol("WM_DELETE_WINDOW", disable_event)
+    popup.protocol("WM_DELETE_WINDOW", root.destroy)
 
     ok_button.pack(pady=10)
 

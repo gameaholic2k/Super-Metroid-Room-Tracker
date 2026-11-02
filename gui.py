@@ -1,3 +1,4 @@
+import sys
 import json
 from typing import Final
 import file_loader
@@ -34,17 +35,24 @@ class MainApplication:
         self.queue: Queue[str] = Queue()
         self.stop_thread = threading.Event()
         self.thread = None
+
         self.sm_files = file_loader.FileManager()
         self.root = self._initialize_ttk_root()
         self.ttk_style = self._initialize_style()
         self.default_background_color: Final[str] = self.root.cget("bg")
 
         self.all_run_categories: Final[list[str]] = self.sm_files.get_run_categories()
+
         if not self.sm_files.roomtime_config['enabled_categories']:
             popup_window.initialize_category_popup_window(root=self.root,
                                                           run_category_names=self.all_run_categories,
                                                           config=self.sm_files.config,
                                                           config_file=self.sm_files.config_file)
+
+        try:
+            self.root.winfo_exists()
+        except tkinter.TclError:
+            sys.exit(1)
 
         run_category_settings: dict[str, bool] = {}
         for category in self.all_run_categories:
@@ -52,6 +60,7 @@ class MainApplication:
                 run_category_settings[category] = True
             else:
                 run_category_settings[category] = False
+        print(bool(self.root.winfo_exists()))
         enabled_categories = [key for key, value in run_category_settings.items() if value is True]
         self.log_handler = file_reader.RoomLogs(self.sm_files, enabled_categories)
         self.room_log_indexes_delete_queue: list[int] = []
